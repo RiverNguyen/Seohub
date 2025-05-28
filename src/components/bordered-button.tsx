@@ -54,7 +54,7 @@ const CustomBorderedButton: React.FC<CustomBorderedButtonProps> = ({
       {/* Inner Content */}
       <div className='relative flex items-center w-full h-full bg-white'>
         {/* Text Content */}
-        <div className='relative z-10 text-black text-xs font-normal px-[3.1875rem] sm:px-[3.1875rem] px-[1.55rem] transition-colors duration-300 delay-100 group-hover:text-white'>
+        <div className='relative z-10 text-black text-xs font-normal px-[3.1875rem] sm:px-[3.1875rem]  transition-colors duration-300 delay-100 group-hover:text-white'>
           {children}
         </div>
 

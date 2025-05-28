@@ -237,3 +237,16 @@ input[type='number'] {
 .gjs-pn-panel.gjs-pn-commands.gjs-one-bg.gjs-two-color {
   padding: 0;
 }
+
+@keyframes marquee {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-marquee {
+  animation: marquee 20s linear infinite;
+}

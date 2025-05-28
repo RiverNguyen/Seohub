@@ -22,28 +22,6 @@ const Header = () => {
     getHeaderData()
   }, [])
 
-  useEffect(() => {
-    const headerElement = document.getElementById('header')
-    let prevScrollY = window.scrollY
-
-    const handleToggleHeader = () => {
-      const currentScrollY = window.scrollY
-      if (Math.abs(currentScrollY - prevScrollY) <= 10) {
-        if (currentScrollY > prevScrollY && currentScrollY >= 200) {
-          headerElement?.classList.add('hidden')
-        } else {
-          headerElement?.classList.remove('hidden')
-        }
-      }
-      prevScrollY = currentScrollY
-    }
-
-    window.addEventListener('scroll', handleToggleHeader)
-    return () => {
-      window.removeEventListener('scroll', handleToggleHeader)
-    }
-  }, [])
-
   if (!header) return null
 
   return (
