@@ -1,3 +1,5 @@
+import Footer from '@/components/footer'
+import Header from '@/components/header'
 import {Toaster} from '@/components/ui/sonner'
 import GsapProvider from '@/provider/GsapProvider'
 import {ViewTransitions} from 'next-view-transitions'
@@ -6,7 +8,11 @@ import NextTopLoader from 'nextjs-toploader'
 export default function MainLayout({children}: {children: React.ReactNode}) {
   return (
     <ViewTransitions>
-      <GsapProvider>{children}</GsapProvider>
+      <GsapProvider>
+        <Header />
+        {children}
+        <Footer />
+      </GsapProvider>
       <Toaster richColors />
       <NextTopLoader
         color='linear-gradient(90deg, #89f7fe 0%, #66a6ff 100%)'
