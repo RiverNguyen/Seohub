@@ -8,8 +8,8 @@ import NextTopLoader from 'nextjs-toploader'
 export default function MainLayout({children}: {children: React.ReactNode}) {
   return (
     <ViewTransitions>
+      <Header />
       <GsapProvider>
-        <Header />
         {children}
         <Footer />
       </GsapProvider>

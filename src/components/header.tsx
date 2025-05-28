@@ -6,9 +6,11 @@ import fetchData from '@/fetches/fetchData'
 import Link from 'next/link'
 import type {Header, ILink} from '@/types/header.interface'
 import CustomBorderedButton from '@/components/bordered-button'
+import {cn} from '@/lib/utils'
 
 const Header = () => {
   const [header, setHeader] = useState<Header | null>(null)
+  const [isHidden, setIsHidden] = useState(false)
 
   useEffect(() => {
     const getHeaderData = async () => {
@@ -22,12 +24,39 @@ const Header = () => {
     getHeaderData()
   }, [])
 
+  useEffect(() => {
+    let prevScrollY = window.scrollY
+
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY
+      if (Math.abs(currentScrollY - prevScrollY) <= 10) return
+
+      if (currentScrollY > prevScrollY && currentScrollY >= 200) {
+        setIsHidden(true)
+      } else {
+        setIsHidden(false)
+      }
+
+      prevScrollY = currentScrollY
+    }
+
+    window.addEventListener('scroll', handleScroll)
+    return () => {
+      window.removeEventListener('scroll', handleScroll)
+    }
+  }, [])
+
   if (!header) return null
 
   return (
     <header
-      id='header'
-      className='header__wrapper w-full bg-white shadow-[0px_4px_24px_0px_rgba(0,0,0,0.06)] z-[100] sticky top-0 transition-all duration-500 ease-in-out'
+      className={cn(
+        'header__wrapper w-full bg-white shadow-[0px_4px_24px_0px_rgba(0,0,0,0.06)] z-[100] sticky top-0 transition-transform duration-500 ease-in-out transform',
+        {
+          'translate-y-[-100%]': isHidden,
+          'translate-y-0': !isHidden,
+        },
+      )}
     >
       <div className='max-w-[93.825rem] mx-auto flex items-center justify-between py-[1.625rem] xsm:py-[0.875rem] xsm:px-[1rem] xsm:h-[3.6875rem]'>
         {header.logo && (

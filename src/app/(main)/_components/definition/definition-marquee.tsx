@@ -22,8 +22,8 @@ const DefinitionMarquee = ({
       </p>
 
       <div className='w-[85rem] overflow-hidden relative mt-5 mx-auto'>
-        <div className='absolute top-0 left-0 w-[15%] z-10 h-full pointer-events-none bg-gradient-to-r from-white via-white/60 to-transparent'></div>
-        <div className='absolute top-0 right-0 w-[15%] z-10 h-full pointer-events-none bg-gradient-to-l from-white via-white/60 to-transparent'></div>
+        <div className='absolute top-0 left-0 w-[15%] z-10 h-full pointer-events-none bg-gradient-to-r from-white via-white/60 to-transparent xsm:hidden'></div>
+        <div className='absolute top-0 right-0 w-[15%] z-10 h-full pointer-events-none bg-gradient-to-l from-white via-white/60 to-transparent xsm:hidden'></div>
         <div className='flex'>
           <ul className='inline-block whitespace-nowrap animate-marquee'>
             {duplicatedPartners.map((partner) => (
