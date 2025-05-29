@@ -11,14 +11,19 @@ import {cn} from '@/lib/utils'
 const Header = () => {
   const [header, setHeader] = useState<Header | null>(null)
   const [isHidden, setIsHidden] = useState(false)
+  const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
     const getHeaderData = async () => {
-      const {header}: {header: Header} = await fetchData({
-        api: '/custom/v1/options',
-        method: 'GET',
-      })
-      setHeader(header)
+      try {
+        const {header}: {header: Header} = await fetchData({
+          api: '/custom/v1/options',
+          method: 'GET',
+        })
+        setHeader(header)
+      } finally {
+        setIsLoading(false)
+      }
     }
 
     getHeaderData()
@@ -45,6 +50,16 @@ const Header = () => {
       window.removeEventListener('scroll', handleScroll)
     }
   }, [])
+
+  if (isLoading) {
+    return (
+      <header className='header__wrapper w-full bg-white shadow-[0px_4px_24px_0px_rgba(0,0,0,0.06)] z-[100] sticky top-0'>
+        <div className='max-w-[93.825rem] mx-auto flex items-center justify-between py-[1.625rem] xsm:py-[0.875rem] xsm:px-[1rem] xsm:h-[3.6875rem]'>
+          <div className='w-[9.375rem] h-[25.5px] bg-gray-200 animate-pulse rounded'></div>
+        </div>
+      </header>
+    )
+  }
 
   if (!header) return null
 

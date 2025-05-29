@@ -4,7 +4,7 @@ import {useEffect} from 'react'
 import {initializeSVGAnimations} from '@/animation/draw-svg'
 import gsap from 'gsap'
 
-export default function DefinitionClient() {
+const DefinitionClient = () => {
   useEffect(() => {
     initializeSVGAnimations()
 
@@ -164,3 +164,5 @@ export default function DefinitionClient() {
 
   return null
 }
+
+export default DefinitionClient

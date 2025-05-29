@@ -1,9 +1,9 @@
 import DefinitionMarquee from '@/app/(main)/_components/definition/definition-marquee'
+import {CustomBadge} from '@/components/custom-badge'
 import fetchData from '@/fetches/fetchData'
 import type {Definition} from '@/types/definition.interface'
 import Image from 'next/image'
 import DefinitionClient from './definition-client'
-import {CustomBadge} from '@/components/custom-badge'
 
 const Definition = async () => {
   const {acf} = await fetchData({
