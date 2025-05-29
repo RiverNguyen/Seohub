@@ -5,7 +5,7 @@ import ValueToCustomer from '@/app/(main)/_components/value-to-customer/value-to
 
 export default function Page() {
   return (
-    <div className='h-[10000px] mt-[7.5rem]'>
+    <div className='mt-[7.5rem]'>
       {/* <Banner /> */}
       <Definition />
       <ValueToCustomer />

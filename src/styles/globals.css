@@ -250,3 +250,67 @@ input[type='number'] {
 .animate-marquee {
   animation: marquee 20s linear infinite;
 }
+
+@keyframes rotate_reset {
+  0% {
+    transform: rotate(-180deg);
+    width: 2.1875rem;
+    height: 2.125rem;
+  }
+  100% {
+    transform: rotate(0deg);
+    width: 0.4rem;
+    height: 0.4rem;
+  }
+}
+
+@keyframes rotate_big {
+  0% {
+    transform: rotate(0deg);
+    width: 0.4rem;
+    height: 0.4rem;
+  }
+  100% {
+    transform: rotate(-180deg);
+    width: 2.1875rem;
+    height: 2.125rem;
+  }
+}
+
+@keyframes rotate_reset_mb {
+  0% {
+    transform: rotate(-180deg);
+    width: 1.4rem;
+    height: 1.4rem;
+  }
+  100% {
+    transform: rotate(0deg);
+    width: 0.4rem;
+    height: 0.4rem;
+  }
+}
+
+@keyframes rotate_big_mb {
+  0% {
+    transform: rotate(0deg);
+    width: 0.4rem;
+    height: 0.4rem;
+  }
+  100% {
+    transform: rotate(-180deg);
+    width: 1.4rem;
+    height: 1.4rem;
+  }
+}
+
+@keyframes flashColor {
+  0% {
+    color: white;
+  }
+  50% {
+    color: #1550e5;
+  }
+  100% {
+    color: white;
+  }
+}
