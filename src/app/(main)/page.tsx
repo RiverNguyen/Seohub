@@ -1,4 +1,5 @@
 import Definition from '@/app/(main)/_components/definition/definition'
+import ImpressivePost from '@/app/(main)/_components/impressive-post/impressive-post'
 import ProcessAndField from '@/app/(main)/_components/process-and-field/process-and-field'
 import ValueToCustomer from '@/app/(main)/_components/value-to-customer/value-to-customer'
 
@@ -9,6 +10,7 @@ export default function Page() {
       <Definition />
       <ValueToCustomer />
       <ProcessAndField />
+      <ImpressivePost />
     </div>
   )
 }
