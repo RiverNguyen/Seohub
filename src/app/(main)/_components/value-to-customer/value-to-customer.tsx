@@ -6,10 +6,6 @@ import fetchData from '@/fetches/fetchData'
 import {IValueToCustomer} from '@/types/value.interface'
 import Image from 'next/image'
 import {useEffect, useRef, useState} from 'react'
-import gsap from 'gsap'
-import {ScrollTrigger} from 'gsap/ScrollTrigger'
-
-gsap.registerPlugin(ScrollTrigger)
 
 const ValueToCustomer = () => {
   const [value, setValue] = useState<IValueToCustomer | null>(null)
@@ -30,9 +26,7 @@ const ValueToCustomer = () => {
     fetchDefinition()
   }, [])
 
-  if (!value) {
-    return <div>No value data available</div>
-  }
+  if (!value) return null
 
   return (
     <section

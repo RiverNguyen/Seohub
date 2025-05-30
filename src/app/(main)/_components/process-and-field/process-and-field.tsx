@@ -1,15 +1,10 @@
 'use client'
 
-import {useEffect, useState} from 'react'
-import gsap from 'gsap'
-import {ScrollTrigger} from 'gsap/ScrollTrigger'
-import {ScrollSmoother} from 'gsap/ScrollSmoother'
-import Image from 'next/image'
-import fetchData from '@/fetches/fetchData'
-import {Commitment} from '@/types/workflow.interface'
-import {Workflow} from '@/types/workflow.interface'
 import {CustomBadge} from '@/components/custom-badge'
-gsap.registerPlugin(ScrollTrigger, ScrollSmoother)
+import fetchData from '@/fetches/fetchData'
+import {Commitment, Workflow} from '@/types/workflow.interface'
+import Image from 'next/image'
+import {useEffect, useState} from 'react'
 
 const ProcessAndField = () => {
   const [workflow, setWorkflow] = useState<Workflow>()
