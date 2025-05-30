@@ -48,13 +48,15 @@ const DefinitionCompany = ({
           />
         </svg>
       </div>
-      <Image
-        src={imageUrl}
-        className='w-[54.20319rem] h-[25.10856rem] object-contain xsm:w-[23.22413rem] xsm:h-[10.75813rem]'
-        alt={imageAlt}
-        width={imageWidth}
-        height={imageHeight}
-      />
+      {imageUrl && (
+        <Image
+          src={imageUrl}
+          className='w-[54.20319rem] h-[25.10856rem] object-contain xsm:w-[23.22413rem] xsm:h-[10.75813rem]'
+          alt={imageAlt}
+          width={imageWidth}
+          height={imageHeight}
+        />
+      )}
     </div>
   )
 }
