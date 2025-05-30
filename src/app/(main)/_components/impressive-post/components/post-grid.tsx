@@ -1,0 +1,67 @@
+'use client'
+
+import {Post} from '@/types/post.interface'
+import Image from 'next/image'
+import {Skeleton} from '@/components/ui/skeleton'
+
+interface PostGridProps {
+  posts: Post[]
+  isLoading: boolean
+}
+
+const PostGrid = ({posts, isLoading}: PostGridProps) => {
+  if (isLoading) {
+    return (
+      <>
+        {[1, 2, 3, 4].map((i) => (
+          <Skeleton
+            key={i}
+            className='h-[14.375rem] rounded-[1.25rem]'
+          />
+        ))}
+      </>
+    )
+  }
+
+  return (
+    <>
+      {posts.map((post: Post) => (
+        <a
+          key={post.id}
+          href={post.link}
+          className='relative p-[1.29rem_1.25rem_1.21rem] rounded-[1.25rem] border border-[#e4e4e4] bg-white shadow-[0px_4px_24.4px_0px_rgba(0,0,0,0.04)] h-[14.375rem] flex flex-col justify-between overflow-hidden group hover:border-[#1550e5] transition-all duration-300'
+        >
+          <article>
+            <div className='absolute inset-0 w-full h-full opacity-0 scale-120 transition-all duration-300 group-hover:opacity-100 group-hover:scale-100'>
+              {post.thumbnail && (
+                <Image
+                  width={470}
+                  height={294}
+                  src={post.thumbnail}
+                  alt={post.title}
+                  className='w-full h-full object-cover'
+                />
+              )}
+              <div className='absolute inset-0 bg-black/40'></div>
+            </div>
+            <div className='relative z-1 h-[11.875rem] w-full flex flex-col justify-between'>
+              <div className='text-[1.25rem] leading-[1.4375rem] text-[#081d1a] group-hover:text-white transition-colors duration-300'>
+                {post.title}
+              </div>
+              <div className='flex items-end justify-between pt-[0.625rem] border-t border-[#e8e8e8]'>
+                <div className='text-[1.875rem] leading-[1.72125rem] text-[#e6e8ea] group-hover:text-white transition-colors duration-300'>
+                  {post.date}
+                </div>
+                <span className='text-[#1550e5] text-base leading-[1.39rem] group-hover:text-white transition-colors duration-300'>
+                  Xem chi tiết
+                </span>
+              </div>
+            </div>
+          </article>
+        </a>
+      ))}
+    </>
+  )
+}
+
+export default PostGrid
