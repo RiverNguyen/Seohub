@@ -11,18 +11,6 @@ const BannerSkeleton = () => {
 
             {/* Secondary image skeleton */}
             <Skeleton className='absolute w-[47.79563rem] h-[8.60319rem] left-1/2 bottom-[20rem] -translate-x-1/2 z-0' />
-
-            {/* Background mark skeleton */}
-            <Skeleton className='absolute w-[90rem] h-[56.25rem] left-1/2 -bottom-[19.2rem] -translate-x-[50.5%] z-[1]' />
-
-            {/* Content boxes skeletons */}
-            <div className='rounded-[1.45rem] overflow-hidden absolute bottom-[1.61rem] w-[26.44894rem] h-[23.40956rem] z-10 flex left-[1.78rem]'>
-              <Skeleton className='w-full h-full' />
-            </div>
-
-            <div className='rounded-[1.45rem] overflow-hidden absolute bottom-[1.61rem] w-[26.44894rem] h-[23.40956rem] z-10 flex right-[1.78rem]'>
-              <Skeleton className='w-full h-full' />
-            </div>
           </div>
         </div>
       </div>

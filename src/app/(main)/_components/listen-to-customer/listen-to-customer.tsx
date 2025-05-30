@@ -1,35 +1,24 @@
 'use client'
 
 import CustomBorderedButton from '@/components/bordered-button'
-import fetchData from '@/fetches/fetchData'
 import {IListenToCustomer} from '@/types/listen.interface'
 import Image from 'next/image'
-import {useEffect, useState, useRef} from 'react'
+import {useRef} from 'react'
+import {Autoplay, EffectFade} from 'swiper/modules'
 import {Swiper, SwiperSlide} from 'swiper/react'
-import {EffectFade, Autoplay} from 'swiper/modules'
-import {Stars} from './components/stars'
 import {Badges, animateBadges} from './components/badges'
+import {Stars} from './components/stars'
 import {WorkingRules} from './components/working-rules'
 
 import 'swiper/css'
 import 'swiper/css/effect-fade'
 
-const ListenToCustomer = () => {
-  const [listenToCustomer, setListenToCustomer] =
-    useState<IListenToCustomer | null>(null)
+const ListenToCustomer = ({
+  listenToCustomer,
+}: {
+  listenToCustomer: IListenToCustomer
+}) => {
   const badgeRefs = useRef<(HTMLDivElement | null)[]>([])
-
-  useEffect(() => {
-    const fetchListenToCustomer = async () => {
-      const {acf} = await fetchData({
-        api: '/v2/pages/11?_fields=acf&acf_format=standard#',
-        method: 'GET',
-      })
-
-      setListenToCustomer(acf.listen_to_customer)
-    }
-    fetchListenToCustomer()
-  }, [])
 
   if (!listenToCustomer) return null
 
@@ -56,13 +45,13 @@ const ListenToCustomer = () => {
         <WorkingRules rules={listenToCustomer.working_rule} />
 
         <div className='absolute'>
-          <a href={listenToCustomer.contact.url}>
+          <a href={listenToCustomer?.contact?.url}>
             <CustomBorderedButton
               color='#1550E5'
               borderColor='#1550E5'
               borderLine='rgb(134 132 132 / 10%)'
             >
-              {listenToCustomer.contact.title}
+              {listenToCustomer?.contact?.title}
             </CustomBorderedButton>
           </a>
         </div>
@@ -88,7 +77,7 @@ const ListenToCustomer = () => {
             animateBadges(badgeRefs.current)
           }}
         >
-          {listenToCustomer.representative_face.map((item, index) => (
+          {listenToCustomer?.representative_face?.map((item, index) => (
             <SwiperSlide key={item.thumbnail.id}>
               <Image
                 src={item.thumbnail.url}

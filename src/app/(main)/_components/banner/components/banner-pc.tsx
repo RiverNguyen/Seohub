@@ -1,3 +1,5 @@
+'use client'
+
 import type {IBanner} from '@/types/banner.interface'
 import Image from 'next/image'
 import {useRef, useState} from 'react'
@@ -9,10 +11,10 @@ import 'swiper/css/effect-fade'
 import 'swiper/css/pagination'
 
 interface BannerPCProps {
-  banner_slides: IBanner[]
+  bannerSlides: IBanner[]
 }
 
-const BannerPC = ({banner_slides}: BannerPCProps) => {
+const BannerPC = ({bannerSlides}: BannerPCProps) => {
   const [isHovered, setIsHovered] = useState(false)
   const textRefs = useRef<(HTMLDivElement | null)[]>([])
 
@@ -159,7 +161,7 @@ const BannerPC = ({banner_slides}: BannerPCProps) => {
         allowTouchMove={false}
         loop={true}
       >
-        {banner_slides.map((item, index) => (
+        {bannerSlides?.map((item, index) => (
           <SwiperSlide
             className='text-center bg-[#f7f7f7] flex justify-center items-center'
             key={index}

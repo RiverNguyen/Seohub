@@ -5,28 +5,18 @@ import {CustomBadge} from '@/components/custom-badge'
 import fetchData from '@/fetches/fetchData'
 import {IValueToCustomer} from '@/types/value.interface'
 import Image from 'next/image'
-import {useEffect, useRef, useState} from 'react'
+import {useRef} from 'react'
 
-const ValueToCustomer = () => {
-  const [value, setValue] = useState<IValueToCustomer | null>(null)
+const ValueToCustomer = ({
+  valueToCustomer,
+}: {
+  valueToCustomer: IValueToCustomer
+}) => {
   const vtcWrapperRef = useRef<HTMLDivElement>(null)
   const vtcHeaderRef = useRef<HTMLDivElement>(null)
   const vtcTitleRef = useRef<HTMLHeadingElement>(null)
   const vtcCardListRef = useRef<HTMLDivElement>(null)
   const triggerEndSectionRef = useRef<HTMLDivElement>(null)
-
-  useEffect(() => {
-    const fetchDefinition = async () => {
-      const {acf} = await fetchData({
-        api: '/v2/pages/11?_fields=acf&acf_format=standard#',
-        method: 'GET',
-      })
-      setValue(acf.value_to_customer)
-    }
-    fetchDefinition()
-  }, [])
-
-  if (!value) return null
 
   return (
     <section
@@ -40,17 +30,17 @@ const ValueToCustomer = () => {
           ref={vtcHeaderRef}
         >
           <h2
-            dangerouslySetInnerHTML={{__html: value.title}}
+            dangerouslySetInnerHTML={{__html: valueToCustomer?.title}}
             className='text-white text-[2.875rem] leading-[4rem] font-normal text-left vtc__title'
             ref={vtcTitleRef}
           ></h2>
-          {value.contact && value.contact.url && (
+          {valueToCustomer.contact && valueToCustomer.contact.url && (
             <a
-              href={value.contact.url}
+              href={valueToCustomer.contact.url}
               className='relative cursor-pointer no-underline'
             >
               <CustomBorderedButton color='#00D3D0'>
-                {value.contact.title ?? ''}
+                {valueToCustomer.contact.title ?? ''}
               </CustomBorderedButton>
             </a>
           )}
@@ -60,7 +50,7 @@ const ValueToCustomer = () => {
           className='relative mt-[11.24rem] flex flex-col pointer-events-none vtc__card-list'
           ref={vtcCardListRef}
         >
-          {value.value_1 && (
+          {valueToCustomer.value_1 && (
             <div className='relative flex-shrink-0 mb-[4.18rem] vtc__card-item'>
               <article className='relative p-[1.87163rem_6.375rem_1.87163rem_1.875rem] min-h-[20.07rem] flex items-start rounded-[0.875rem] bg-white shadow-[0px_-59.892px_74.865px_0px_rgba(3,33,7,0.04)] overflow-hidden'>
                 <div className='flex-shrink-0 mr-[20.5625rem] inline-flex w-[3.05969rem] h-[3.05969rem] justify-center items-center rounded-[0.6875rem] bg-[#fe7301] shadow-[0px_4px_15.2px_0px_rgba(255,115,0,0.25)] text-white text-[1.2225rem] font-bold leading-[150%]'>
@@ -79,7 +69,7 @@ const ValueToCustomer = () => {
                     </div>
                     <h3
                       dangerouslySetInnerHTML={{
-                        __html: value.value_1.title ?? '',
+                        __html: valueToCustomer.value_1.title ?? '',
                       }}
                       className='flex-1 text-[#081d1a] text-[1.75rem] font-normal leading-[139%] tracking-[-0.0175rem] vtc__card-item__title-content'
                     ></h3>
@@ -87,7 +77,7 @@ const ValueToCustomer = () => {
                   <div className='my-[1.6375rem] w-full h-[0.0585rem] rounded-[0.0585rem] bg-gradient-to-r from-[rgba(112,115,124,0.22)] from-[24.3%] to-[rgba(112,115,124,0)] to-[82.57%]'></div>
                   <div
                     dangerouslySetInnerHTML={{
-                      __html: value.value_1.description ?? '',
+                      __html: valueToCustomer.value_1.description ?? '',
                     }}
                     className='text-[#666d80] text-[0.875rem] font-normal leading-[150%] vtc__card-item__desc-wrapper'
                   ></div>
@@ -119,12 +109,12 @@ const ValueToCustomer = () => {
                     height={1000}
                   />
                   <div className='absolute top-0 bottom-0 left-[4.83rem] w-[16.89238rem] h-[19.893rem] z-[5]'>
-                    {value.value_1.thumbnail && (
+                    {valueToCustomer.value_1.thumbnail && (
                       <Image
-                        src={value.value_1.thumbnail.url}
-                        alt={value.value_1.title ?? ''}
-                        width={value.value_1.thumbnail.width}
-                        height={value.value_1.thumbnail.height}
+                        src={valueToCustomer.value_1.thumbnail.url}
+                        alt={valueToCustomer.value_1.title ?? ''}
+                        width={valueToCustomer.value_1.thumbnail.width}
+                        height={valueToCustomer.value_1.thumbnail.height}
                       />
                     )}
                   </div>
@@ -176,9 +166,9 @@ const ValueToCustomer = () => {
                     </svg>
                   </div>
                   <div className='absolute bottom-[0.875rem] right-[3.5rem] z-10'>
-                    {value.value_1.tag && (
+                    {valueToCustomer.value_1.tag && (
                       <CustomBadge background='#FF7300'>
-                        {value.value_1.tag}
+                        {valueToCustomer.value_1.tag}
                       </CustomBadge>
                     )}
                   </div>
@@ -187,7 +177,7 @@ const ValueToCustomer = () => {
             </div>
           )}
 
-          {value.value_2 && (
+          {valueToCustomer.value_2 && (
             <div className='relative flex-shrink-0 mb-[4.18rem] vtc__card-item'>
               <article className='relative p-[1.87163rem_6.375rem_1.87163rem_1.875rem] min-h-[20.07rem] flex items-start rounded-[0.875rem] bg-white shadow-[0px_-59.892px_74.865px_0px_rgba(3,33,7,0.04)] overflow-hidden'>
                 <div className='flex-shrink-0 mr-[20.5625rem] inline-flex w-[3.05969rem] h-[3.05969rem] justify-center items-center rounded-[0.6875rem] bg-[#fe7301] shadow-[0px_4px_15.2px_0px_rgba(255,115,0,0.25)] text-white text-[1.2225rem] font-bold leading-[150%]'>
@@ -206,7 +196,7 @@ const ValueToCustomer = () => {
                     </div>
                     <h3
                       dangerouslySetInnerHTML={{
-                        __html: value.value_2.title ?? '',
+                        __html: valueToCustomer.value_2.title ?? '',
                       }}
                       className='flex-1 text-[#081d1a] text-[1.75rem] font-normal leading-[139%] tracking-[-0.0175rem]'
                     ></h3>
@@ -214,7 +204,7 @@ const ValueToCustomer = () => {
                   <div className='my-[1.6375rem] w-full h-[0.0585rem] rounded-[0.0585rem] bg-gradient-to-r from-[rgba(112,115,124,0.22)] from-[24.3%] to-[rgba(112,115,124,0)] to-[82.57%]'></div>
                   <div
                     dangerouslySetInnerHTML={{
-                      __html: value.value_2.description ?? '',
+                      __html: valueToCustomer.value_2.description ?? '',
                     }}
                     className='text-[#666d80] text-[0.875rem] font-normal leading-[150%]'
                   ></div>
@@ -246,12 +236,12 @@ const ValueToCustomer = () => {
                     height={1000}
                   />
                   <div className='absolute w-[16.44963rem] h-[19.21781rem] -bottom-[0.25rem] left-1/2 -translate-x-1/2'>
-                    {value.value_2.thumbnail && (
+                    {valueToCustomer.value_2.thumbnail && (
                       <Image
-                        src={value.value_2.thumbnail.url}
-                        alt={value.value_2.title ?? ''}
-                        width={value.value_2.thumbnail.width}
-                        height={value.value_2.thumbnail.height}
+                        src={valueToCustomer.value_2.thumbnail.url}
+                        alt={valueToCustomer.value_2.title ?? ''}
+                        width={valueToCustomer.value_2.thumbnail.width}
+                        height={valueToCustomer.value_2.thumbnail.height}
                       />
                     )}
                   </div>
@@ -302,9 +292,9 @@ const ValueToCustomer = () => {
                     </svg>
                   </div>
                   <div className='absolute bottom-[0.875rem] right-[3.5rem] z-10'>
-                    {value.value_2.tag && (
+                    {valueToCustomer.value_2.tag && (
                       <CustomBadge background='#1650E5'>
-                        {value.value_2.tag}
+                        {valueToCustomer.value_2.tag}
                       </CustomBadge>
                     )}
                   </div>
@@ -313,7 +303,7 @@ const ValueToCustomer = () => {
             </div>
           )}
 
-          {value.value_3 && (
+          {valueToCustomer.value_3 && (
             <div className='relative flex-shrink-0 mb-[4.18rem] vtc__card-item'>
               <article className='relative p-[1.87163rem_6.375rem_1.87163rem_1.875rem] min-h-[20.07rem] flex items-start rounded-[0.875rem] bg-white shadow-[0px_-59.892px_74.865px_0px_rgba(3,33,7,0.04)] overflow-hidden'>
                 <div className='flex-shrink-0 mr-[20.5625rem] inline-flex w-[3.05969rem] h-[3.05969rem] justify-center items-center rounded-[0.6875rem] bg-[#fe7301] shadow-[0px_4px_15.2px_0px_rgba(255,115,0,0.25)] text-white text-[1.2225rem] font-bold leading-[150%]'>
@@ -332,7 +322,7 @@ const ValueToCustomer = () => {
                     </div>
                     <h3
                       dangerouslySetInnerHTML={{
-                        __html: value.value_3.title ?? '',
+                        __html: valueToCustomer.value_3.title ?? '',
                       }}
                       className='flex-1 text-[#081d1a] text-[1.75rem] font-normal leading-[139%] tracking-[-0.0175rem]'
                     ></h3>
@@ -340,7 +330,7 @@ const ValueToCustomer = () => {
                   <div className='my-[1.6375rem] w-full h-[0.0585rem] rounded-[0.0585rem] bg-gradient-to-r from-[rgba(112,115,124,0.22)] from-[24.3%] to-[rgba(112,115,124,0)] to-[82.57%]'></div>
                   <div
                     dangerouslySetInnerHTML={{
-                      __html: value.value_3.description ?? '',
+                      __html: valueToCustomer.value_3.description ?? '',
                     }}
                     className='text-[#666d80] text-[0.875rem] font-normal leading-[150%]'
                   ></div>
@@ -372,12 +362,12 @@ const ValueToCustomer = () => {
                     height={1000}
                   />
                   <div className='absolute w-[16.44963rem] h-[19.21781rem] bottom-0 left-[5.03rem]'>
-                    {value.value_3.thumbnail && (
+                    {valueToCustomer.value_3.thumbnail && (
                       <Image
-                        src={value.value_3.thumbnail.url}
-                        alt={value.value_3.title ?? ''}
-                        width={value.value_3.thumbnail.width}
-                        height={value.value_3.thumbnail.height}
+                        src={valueToCustomer.value_3.thumbnail.url}
+                        alt={valueToCustomer.value_3.title ?? ''}
+                        width={valueToCustomer.value_3.thumbnail.width}
+                        height={valueToCustomer.value_3.thumbnail.height}
                       />
                     )}
                   </div>
@@ -407,9 +397,9 @@ const ValueToCustomer = () => {
                     />
                   </div>
                   <div className='absolute bottom-[0.875rem] right-[3.5rem] z-10'>
-                    {value.value_3.tag && (
+                    {valueToCustomer.value_3.tag && (
                       <CustomBadge background='#00D3D0'>
-                        {value.value_3.tag}
+                        {valueToCustomer.value_3.tag}
                       </CustomBadge>
                     )}
                   </div>

@@ -10,31 +10,22 @@ import CategoryTabs from './components/category-tabs'
 import FeaturedPost from './components/featured-post'
 import PostGrid from './components/post-grid'
 
-const ImpressivePost = () => {
+const ImpressivePost = ({impressivePost}: {impressivePost: ImpressivePost}) => {
   const [selectedCategory, setSelectedCategory] = useState('all')
   const [filteredPosts, setFilteredPosts] = useState<Post[]>([])
   const [categories, setCategories] = useState<Category[]>([])
-  const [impressivePost, setImpressivePost] = useState<ImpressivePost | null>(
-    null,
-  )
+
   const [isLoading, setIsLoading] = useState(true)
   const [isLoadingPosts, setIsLoadingPosts] = useState(false)
 
   useEffect(() => {
     const fetchInitialData = async () => {
       try {
-        const [acfData, categoriesData] = await Promise.all([
-          fetchData({
-            api: '/v2/pages/11?_fields=acf&acf_format=standard#',
-            method: 'GET',
-          }),
-          fetchData({
-            api: '/v2/categories',
-            method: 'GET',
-          }),
-        ])
+        const categoriesData = await fetchData({
+          api: '/v2/categories',
+          method: 'GET',
+        })
 
-        setImpressivePost(acfData.acf.impressive_post)
         setCategories(categoriesData)
         await fetchPostsByCategory('all')
       } finally {
@@ -97,10 +88,6 @@ const ImpressivePost = () => {
         </div>
       </section>
     )
-  }
-
-  if (!impressivePost) {
-    return null
   }
 
   return (

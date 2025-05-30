@@ -13,23 +13,24 @@ const ImpressivePostHeader = ({impressivePost}: ImpressivePostHeaderProps) => {
       <h2
         className='text-[2.875rem] leading-[4rem] font-normal text-[#0725b7]'
         dangerouslySetInnerHTML={{
-          __html: impressivePost.title,
+          __html: impressivePost?.title,
         }}
       ></h2>
-      {impressivePost.discovery_post && impressivePost.discovery_post.url && (
-        <a
-          href={impressivePost.discovery_post.url}
-          className='vtc__link-detail'
-        >
-          <CustomBorderedButton
-            color='#1550E5'
-            borderColor='#1550E5'
-            borderLine='rgb(134 132 132 / 10%)'
+      {impressivePost?.discovery_post &&
+        impressivePost?.discovery_post?.url && (
+          <a
+            href={impressivePost?.discovery_post?.url}
+            className='vtc__link-detail'
           >
-            {impressivePost.discovery_post.title}
-          </CustomBorderedButton>
-        </a>
-      )}
+            <CustomBorderedButton
+              color='#1550E5'
+              borderColor='#1550E5'
+              borderLine='rgb(134 132 132 / 10%)'
+            >
+              {impressivePost?.discovery_post?.title}
+            </CustomBorderedButton>
+          </a>
+        )}
     </div>
   )
 }

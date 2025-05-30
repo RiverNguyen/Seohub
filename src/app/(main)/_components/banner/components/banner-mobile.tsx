@@ -7,10 +7,10 @@ import 'swiper/css'
 import 'swiper/css/pagination'
 
 interface BannerMobileProps {
-  banner_slides: IBanner[]
+  bannerSlides: IBanner[]
 }
 
-const BannerMobile = ({banner_slides}: BannerMobileProps) => {
+const BannerMobile = ({bannerSlides}: BannerMobileProps) => {
   return (
     <div
       className='w-full relative h-full hidden xsm:block'
@@ -21,7 +21,7 @@ const BannerMobile = ({banner_slides}: BannerMobileProps) => {
         modules={[Pagination]}
         pagination={{clickable: true}}
       >
-        {banner_slides.map((item, index) => (
+        {bannerSlides?.map((item, index) => (
           <SwiperSlide
             className='bg-[#f7f7f7] relative block'
             key={index}
@@ -78,7 +78,7 @@ const BannerMobile = ({banner_slides}: BannerMobileProps) => {
                 <div className='w-[6.94181rem] h-[2.55238rem] rounded-[1.27619rem] overflow-hidden flex justify-center items-center transition-all duration-800 ease-in-out relative'>
                   <div className='w-full h-full bg-[rgba(255,255,255,0.39)] backdrop-blur-[2px] absolute top-0 left-0 right-0 bottom-0 opacity-0 transition-all duration-800 ease-in-out'></div>
                   <div className='w-full h-full bg-gradient-to-b from-[#001cb3] to-[#548beb] absolute top-0 left-0 right-0 bottom-0 opacity-100 transition-all duration-800 ease-in-out'></div>
-                  <span className='z-[1] transition-all duration-800 ease-in-out absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full leading-[134%] tracking-[0.0455rem] text-[0.90956rem] font-normal uppercase opacity-100 text-white font-bold'>
+                  <span className='z-[1] transition-all duration-800 ease-in-out absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full leading-[134%] tracking-[0.0455rem] text-[0.90956rem] uppercase opacity-100 text-white font-bold'>
                     Nhưng !
                   </span>
                   <span className='z-[1] transition-all duration-800 ease-in-out absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full leading-[134%] tracking-[0.0455rem] text-[0.90956rem] font-normal opacity-0 text-[#1550e5]'>

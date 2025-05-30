@@ -7,8 +7,8 @@ const DefinitionMarquee = ({
   definition_partner: IMedia[]
 }) => {
   const duplicatedPartners = [
-    ...definition_partner,
-    ...definition_partner,
+    ...(definition_partner || []),
+    ...(definition_partner || []),
   ].sort(() => Math.random() - 0.5)
 
   return (

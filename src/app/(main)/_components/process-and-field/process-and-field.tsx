@@ -1,39 +1,18 @@
 'use client'
 
 import {CustomBadge} from '@/components/custom-badge'
-import fetchData from '@/fetches/fetchData'
 import {Commitment, Workflow} from '@/types/workflow.interface'
 import Image from 'next/image'
-import {useEffect, useState} from 'react'
 
-const ProcessAndField = () => {
-  const [workflow, setWorkflow] = useState<Workflow>()
-  const [commitment, setCommitment] = useState<Commitment>()
-
+const ProcessAndField = ({
+  workflow,
+  commitment,
+}: {
+  workflow: Workflow
+  commitment: Commitment
+}) => {
   const speeds = [1.5, 1, 3.25, 1, 2.5, 1.5, 1, 2.5, 1.5, 1.5, 1, 3.25]
   const count = speeds.length
-
-  useEffect(() => {
-    const fetchDataAsync = async () => {
-      try {
-        const {acf} = await fetchData({
-          api: '/v2/pages/11?_fields=acf&acf_format=standard#',
-          method: 'GET',
-        })
-
-        setWorkflow(acf.workflow)
-        setCommitment(acf.commitment)
-      } catch (error) {
-        console.error('Error fetching data:', error)
-        if (error instanceof Error) {
-          console.error('Error message:', error.message)
-          console.error('Error stack:', error.stack)
-        }
-      }
-    }
-
-    fetchDataAsync()
-  }, [])
 
   if (!workflow || !commitment) return null
 
@@ -138,7 +117,7 @@ const ProcessAndField = () => {
               </svg>
             </div>
             <div className='overflow-x-hidden absolute bottom-0 flex w-full border-t border-[#e6e8ea] z-10'>
-              {workflow.workflow_list.map((item, index) => {
+              {workflow?.workflow_list?.map((item, index) => {
                 const numberText = String(index + 1).padStart(2, '0')
 
                 return (
@@ -185,7 +164,7 @@ const ProcessAndField = () => {
                     className='vtc__link-detail'
                   >
                     <CustomBadge background='#00d3d0'>
-                      {workflow.contact.contact_on_mobile.title}
+                      {workflow?.contact?.contact_on_mobile?.title}
                     </CustomBadge>
                   </a>
                 </div>
@@ -226,7 +205,7 @@ const ProcessAndField = () => {
                   >
                     <div className='absolute top-0 bottom-0 right-0 bg-[rgb(21,80,229)] z-0 w-0 transition-all duration-[0.5s] ease-in-out group-hover:w-full group-hover:right-auto group-hover:left-0'></div>
                     <p className='z-[1]'>
-                      {workflow.contact.contact_on_pc.title}
+                      {workflow?.contact?.contact_on_pc?.title}
                     </p>
                   </a>
                 </div>
@@ -283,7 +262,7 @@ const ProcessAndField = () => {
             </div>
           </div>
           <div className='grid grid-cols-3 p-4 gap-[25rem] relative z-[11] pb-20 mt-20'>
-            {commitment.img.map((item, index) => {
+            {commitment?.img?.map((item, index) => {
               const speed = speeds[index % count]
               return (
                 <div
