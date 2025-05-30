@@ -93,7 +93,7 @@ const Footer = () => {
   if (isLoading || !footer) return null
 
   return (
-    <div className='relative z-50 bg-white pb-[7.375rem]'>
+    <div className='relative z-50 bg-white '>
       <div
         className='absolute bottom-full left-0 w-full h-[1000px] bg-gradient-to-b from-transparent to-[rgba(102,102,102,0.1)] backdrop-blur-[4.45px] opacity-0 pointer-events-none z-100 transition-opacity duration-300'
         ref={overflowRef}

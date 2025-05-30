@@ -672,3 +672,13 @@ background-image: url("https://seohub.okhub-tech.com/wp-content/uploads/2025/04/
     /* 		transform: translateY(0rem); */
   }
 }
+
+@media (max-width: 768px) {
+  .banner-pc {
+    display: none;
+  }
+
+  .banner-mb {
+    display: block;
+  }
+}

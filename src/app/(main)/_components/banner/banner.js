@@ -26,24 +26,6 @@ document.addEventListener('DOMContentLoaded', () => {
   })
 
   // Khởi tạo Mobile Swiper
-  const mobileSwiper = new Swiper('.mobileSwiper', {
-    pagination: {
-      el: '.swiper-pagination',
-      ...paginationConfig,
-      renderBullet: (index, className) =>
-        paginationConfig
-          .renderBullet(index, className)
-          .replace('width="121"', 'width="4.33894rem"'),
-    },
-    effect: 'fade',
-    autoplay: {delay: 5000, disableOnInteraction: false},
-    allowTouchMove: true,
-    loop: true,
-    on: {
-      init: (swiper) => setupAllChangeButtons(swiper),
-      slideChange: (swiper) => setupAllChangeButtons(swiper),
-    },
-  })
 
   // Xử lý text highlight cho các đoạn văn
   setupTextHighlight()
