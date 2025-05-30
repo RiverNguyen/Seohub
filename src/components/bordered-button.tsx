@@ -14,7 +14,7 @@ const CustomBorderedButton: React.FC<CustomBorderedButtonProps> = ({
   children,
 }) => {
   return (
-    <div className='group relative inline-flex cursor-pointer px-[0.1875rem] min-w-[13.875rem] sm:min-h-[2.625rem] min-h-[2.125rem] transition-all'>
+    <div className='group relative inline-flex cursor-pointer px-[0.1875rem] min-w-[13.875rem] sm:min-h-[2.625rem] min-h-[2.125rem] transition-all p-[0.1875rem]'>
       {/* Corners */}
       <div
         className='absolute top-0 left-0 w-[3px] h-[3px]'
