@@ -1,17 +1,30 @@
 import Footer from '@/components/footer'
 import Header from '@/components/header'
 import {Toaster} from '@/components/ui/sonner'
+import fetchData from '@/fetches/fetchData'
 import GsapProvider from '@/provider/GsapProvider'
 import {ViewTransitions} from 'next-view-transitions'
 import NextTopLoader from 'nextjs-toploader'
 
-export default function MainLayout({children}: {children: React.ReactNode}) {
+export default async function MainLayout({
+  children,
+}: {
+  children: React.ReactNode
+}) {
+  const data = await fetchData({
+    api: '/custom/v1/options',
+    method: 'GET',
+  })
   return (
     <ViewTransitions>
-      <Header />
+      <Header header={data?.header} />
       <GsapProvider>
         {children}
-        <Footer />
+        <Footer
+          footer={data?.footer}
+          social={data?.social}
+          credential={data?.credential}
+        />
       </GsapProvider>
       <Toaster richColors />
       <NextTopLoader

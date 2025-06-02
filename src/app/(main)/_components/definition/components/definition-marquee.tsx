@@ -17,8 +17,8 @@ const DefinitionMarquee = ({
       className='mt-8 overflow-hidden'
     >
       <p className='text-center text-[#092c4cb8] text-base mx-auto'>
-        Được tin cậy bởi hơn
-        <strong>150.000 thương hiệu</strong> thương mại điện tử toàn cầu
+        Được tin cậy bởi hơn <strong>150.000 thương hiệu</strong> thương mại
+        điện tử toàn cầu
       </p>
 
       <div className='w-[85rem] overflow-hidden relative mt-5 mx-auto'>

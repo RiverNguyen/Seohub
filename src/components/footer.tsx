@@ -1,37 +1,31 @@
 'use client'
 
-import fetchData from '@/fetches/fetchData'
 import type {Credential, Footer, SocialList} from '@/types/footer.interface'
 import gsap from 'gsap'
-import ScrollTrigger from 'gsap/ScrollTrigger'
 import Image from 'next/image'
-import {useEffect, useLayoutEffect, useRef, useState} from 'react'
+import {useEffect, useRef, useState} from 'react'
 import FooterCopyright from './footer/footer-copyright'
 import FooterCredential from './footer/footer-credential'
 import FooterHotline from './footer/footer-hotline'
 import FooterLinks from './footer/footer-links'
 import FooterLogo from './footer/footer-logo'
 
-// Đăng ký ScrollTrigger ở cấp độ module
-if (typeof window !== 'undefined') {
-  gsap.registerPlugin(ScrollTrigger)
-}
-
-const Footer = () => {
-  const [footer, setFooter] = useState<Footer | null>(null)
-  const [globalSocial, setGlobalSocial] = useState<SocialList | null>(null)
-  const [credential, setCredential] = useState<Credential | null>(null)
+const Footer = ({
+  footer,
+  social,
+  credential,
+}: {
+  footer: Footer
+  social: SocialList
+  credential: Credential
+}) => {
   const [hoveredIndex, setHoveredIndex] = useState<number>(0)
-  const [isLoading, setIsLoading] = useState(true)
   const footerRef = useRef<HTMLElement>(null)
   const overflowRef = useRef<HTMLDivElement>(null)
 
-  // // Animation khi scroll đến footer
-  useLayoutEffect(() => {
-    if (!footerRef.current || !overflowRef.current || isLoading) return
-
-    // Xóa các trigger cũ
-    // ScrollTrigger.getAll().forEach((trigger) => trigger.kill())
+  // Animation khi scroll đến footer
+  useEffect(() => {
+    if (!footerRef.current || !overflowRef.current) return
 
     const footer = footerRef.current
     const overlay = overflowRef.current
@@ -62,34 +56,7 @@ const Footer = () => {
     return () => {
       clearTimeout(timeout)
     }
-  }, [footer, isLoading])
-
-  // Lấy dữ liệu footer từ API
-  useEffect(() => {
-    const getFooterData = async () => {
-      try {
-        const {
-          footer,
-          social,
-          credential,
-        }: {footer: Footer; social: SocialList; credential: Credential} =
-          await fetchData({
-            api: '/custom/v1/options',
-            method: 'GET',
-          })
-        setFooter(footer)
-        setGlobalSocial(social)
-        setCredential(credential)
-      } catch (error) {
-        console.log(error)
-      } finally {
-        setIsLoading(false)
-      }
-    }
-    getFooterData()
-  }, [])
-
-  if (isLoading || !footer) return null
+  }, [footer])
 
   return (
     <div className='relative z-50 bg-white '>
@@ -117,7 +84,7 @@ const Footer = () => {
           <div className='flex w-[57.45rem] justify-between border-r border-[#f1f1f1]'>
             <FooterLogo
               footer={footer}
-              globalSocial={globalSocial}
+              globalSocial={social}
             />
             <FooterLinks
               footer={footer}

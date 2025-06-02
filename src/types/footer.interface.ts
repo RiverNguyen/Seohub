@@ -16,6 +16,8 @@ export interface Footer {
     image_advise: IMedia
     qr_advise: IMedia
   }
+  social: SocialList
+  credential: Credential
 }
 
 export interface Social {
@@ -24,7 +26,9 @@ export interface Social {
 }
 
 export interface SocialList {
-  map(arg0: (item: any) => any): import('react').ReactNode
+  map(
+    arg0: (item: Social, index: number) => import('react').ReactNode,
+  ): import('react').ReactNode[]
   social_list: Social[]
 }
 

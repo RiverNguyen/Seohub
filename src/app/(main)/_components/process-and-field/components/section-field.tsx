@@ -20,7 +20,6 @@ export default function SectionField({commitment}: {commitment: Commitment}) {
         end: 'bottom bottom',
         pin: fieldOfActivityRef.current,
         scrub: true,
-        markers: true,
       },
     })
 

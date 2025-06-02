@@ -1,5 +1,6 @@
 import Image from 'next/image'
 import type {Footer, SocialList} from '@/types/footer.interface'
+import Link from 'next/link'
 
 interface FooterLogoProps {
   footer: Footer
@@ -10,7 +11,7 @@ const FooterLogo = ({footer, globalSocial}: FooterLogoProps) => {
   return (
     <div className='flex flex-col justify-between relative z-30'>
       <div className='flex flex-col'>
-        <a
+        <Link
           href='#'
           className='mt-14'
         >
@@ -21,7 +22,7 @@ const FooterLogo = ({footer, globalSocial}: FooterLogoProps) => {
             height={4.5}
             className='h-[4.5rem] w-[16.80975rem]'
           />
-        </a>
+        </Link>
         <p className='mt-10 text-[#aaa] text-sm font-normal leading-[1.42188rem] w-[19.65265rem]'>
           {footer.desc}
         </p>
@@ -30,12 +31,12 @@ const FooterLogo = ({footer, globalSocial}: FooterLogoProps) => {
       {globalSocial && (
         <div className='flex relative z-30 pb-7'>
           {globalSocial.map(
-            (item) =>
+            (item, index: number) =>
               item.social_icon &&
               item.social_link &&
               item.social_link.url && (
-                <a
-                  key={item.social_link.url}
+                <Link
+                  key={index}
                   href={item.social_link.url}
                   className='w-11 h-11 flex justify-center items-center rounded-full border border-[rgba(120,120,120,0.17)] mr-3'
                 >
@@ -46,7 +47,7 @@ const FooterLogo = ({footer, globalSocial}: FooterLogoProps) => {
                     height={24}
                     className='w-4 h-4 object-contain'
                   />
-                </a>
+                </Link>
               ),
           )}
         </div>
