@@ -1,5 +1,6 @@
 'use client'
 
+import {useProcessAndFieldAnimation} from '@/app/(main)/_components/process-and-field/useProcessAndFieldAnimation'
 import {CustomBadge} from '@/components/custom-badge'
 import {Commitment, Workflow} from '@/types/workflow.interface'
 import Image from 'next/image'
@@ -11,6 +12,7 @@ const ProcessAndField = ({
   workflow: Workflow
   commitment: Commitment
 }) => {
+  // useProcessAndFieldAnimation()
   const speeds = [1.5, 1, 3.25, 1, 2.5, 1.5, 1, 2.5, 1.5, 1.5, 1, 3.25]
   const count = speeds.length
 
