@@ -1,17 +1,21 @@
-import {ILink} from '@/types/header.interface'
-import {IMedia} from '@/types/media.interface'
-
-interface IValue {
-  title: string
-  description: string
-  thumbnail: IMedia
-  tag: string
+export interface IValueToCustomerItem {
+  title?: string
+  description?: string
+  tag?: string
+  thumbnail?: {
+    url: string
+    width: number
+    height: number
+  }
 }
 
 export interface IValueToCustomer {
-  title: string
-  contact: ILink
-  value_1: IValue
-  value_2: IValue
-  value_3: IValue
+  title?: string
+  value_1?: IValueToCustomerItem
+  value_2?: IValueToCustomerItem
+  value_3?: IValueToCustomerItem
+  contact?: {
+    title?: string
+    url?: string
+  }
 }

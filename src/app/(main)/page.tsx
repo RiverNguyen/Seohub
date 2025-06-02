@@ -19,8 +19,6 @@ export default function Page() {
   if (loading) return <div>Loading...</div>
   if (error) return <div>Error: {error}</div>
 
-  console.log(data)
-
   return (
     <>
       <Banner bannerSlides={data?.banner_slides} />

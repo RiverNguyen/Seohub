@@ -2,10 +2,13 @@
 
 import CustomBorderedButton from '@/components/bordered-button'
 import {CustomBadge} from '@/components/custom-badge'
-import fetchData from '@/fetches/fetchData'
 import {IValueToCustomer} from '@/types/value.interface'
 import Image from 'next/image'
-import {useRef} from 'react'
+import {useRef, useEffect} from 'react'
+import {ScrollTrigger} from 'gsap/ScrollTrigger'
+import gsap from 'gsap'
+
+gsap.registerPlugin(ScrollTrigger)
 
 const ValueToCustomer = ({
   valueToCustomer,
@@ -17,6 +20,119 @@ const ValueToCustomer = ({
   const vtcTitleRef = useRef<HTMLHeadingElement>(null)
   const vtcCardListRef = useRef<HTMLDivElement>(null)
   const triggerEndSectionRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    const vtcWrapperEl = vtcWrapperRef.current
+    const vtcHeaderEl = vtcHeaderRef.current
+    const vtcTitleEl = vtcTitleRef.current
+    const vtcCardListEl = vtcCardListRef.current
+    if (!vtcWrapperEl || !vtcHeaderEl || !vtcCardListEl) return
+
+    // Cleanup any existing ScrollTrigger instances
+    ScrollTrigger.getAll().forEach((trigger) => trigger.kill())
+
+    if (window.innerHeight < 700 && window.innerWidth < 638) {
+      const vtcCardItem = document.querySelectorAll('.vtc__card-item')
+      vtcCardItem.forEach((e) => {
+        const titleContent = e.querySelector(
+          '.vtc__wrapper .vtc__card-item__title-content',
+        ) as HTMLElement
+        const titleDesc = e.querySelector(
+          '.vtc__wrapper .vtc__card-item__desc-wrapper',
+        ) as HTMLElement
+        if (titleContent) {
+          titleContent.style.fontSize = '1.05rem'
+        }
+        if (titleDesc) {
+          titleDesc.style.fontSize = '0.775rem'
+        }
+      })
+    }
+
+    const isMobile = window.innerWidth < 640
+    // Không dùng ScrollTrigger Pin trên mobile
+    if (isMobile) {
+      const triggerEndSectionEl = triggerEndSectionRef.current
+      if (!triggerEndSectionEl) return
+
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            const onTopViewPort = entry.isIntersecting
+            if (vtcTitleEl) {
+              vtcTitleEl.style.opacity = onTopViewPort ? '0' : '1'
+            }
+          })
+        },
+        {
+          threshold: 0.5,
+        },
+      )
+      observer.observe(triggerEndSectionEl)
+
+      return () => {
+        observer.disconnect()
+      }
+    }
+
+    // Desktop animation
+    const handleScrollTriggerPinVtcHeaderEl = () => {
+      const lastVtcCardItemEl = vtcCardListEl?.querySelector(
+        '.vtc__card-item:last-child',
+      )
+      if (!lastVtcCardItemEl) return
+      const offsetTop = isMobile ? 0 : 7.5
+      return ScrollTrigger.create({
+        trigger: vtcHeaderEl,
+        endTrigger: lastVtcCardItemEl,
+        pin: true,
+        start: `top ${offsetTop}%`,
+        end: `top ${offsetTop}%`,
+        pinSpacing: false,
+        scrub: true,
+        markers: false,
+      })
+    }
+
+    const handleScrollTriggerPinVtcCardItemEl = () => {
+      const items = vtcCardListEl.querySelectorAll('.vtc__card-item')
+      const lastItem = vtcCardListEl.querySelector('.vtc__card-item:last-child')
+      if (!items || !items.length) return
+
+      const defaultOffsetTop = isMobile ? 10 : 30 // Tính theo phần trăm 30 = 30%
+      const spaceOffsetTop = isMobile ? 10 : 12.875
+      const triggers: ScrollTrigger[] = []
+      items.forEach((item, index) => {
+        const offsetTop = defaultOffsetTop + spaceOffsetTop * index
+        const offsetTopEnd =
+          defaultOffsetTop + spaceOffsetTop * (items.length - 1)
+        const trigger = ScrollTrigger.create({
+          trigger: item,
+          endTrigger: lastItem,
+          pin: true,
+          start: `top ${offsetTop}%`,
+          end: `top ${offsetTopEnd}%`,
+          pinSpacing: false,
+          scrub: true,
+          anticipatePin: 1,
+        })
+        triggers.push(trigger)
+      })
+      return triggers
+    }
+
+    const headerTrigger = handleScrollTriggerPinVtcHeaderEl()
+    const cardTriggers = handleScrollTriggerPinVtcCardItemEl()
+
+    // Cleanup function
+    return () => {
+      if (headerTrigger) headerTrigger.kill()
+      if (cardTriggers) {
+        cardTriggers.forEach((trigger: ScrollTrigger) => trigger.kill())
+      }
+      ScrollTrigger.getAll().forEach((trigger: ScrollTrigger) => trigger.kill())
+    }
+  }, []) // Empty dependency array since we only want to run this once on mount
 
   return (
     <section
@@ -30,7 +146,7 @@ const ValueToCustomer = ({
           ref={vtcHeaderRef}
         >
           <h2
-            dangerouslySetInnerHTML={{__html: valueToCustomer?.title}}
+            dangerouslySetInnerHTML={{__html: valueToCustomer?.title ?? ''}}
             className='text-white text-[2.875rem] leading-[4rem] font-normal text-left vtc__title'
             ref={vtcTitleRef}
           ></h2>
