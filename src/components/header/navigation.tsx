@@ -1,7 +1,7 @@
 'use client'
 
-import Link from 'next/link'
 import type {ILink} from '@/types/header.interface'
+import Link from 'next/link'
 
 interface NavigationProps {
   menu: Array<{link: ILink}>
@@ -11,10 +11,10 @@ const Navigation = ({menu}: NavigationProps) => {
   return (
     <nav className='flex-shrink-0 inline-flex xsm:hidden'>
       <ul className='flex items-center'>
-        {menu.map((menuItem: {link: ILink}) => (
+        {menu.map((menuItem: {link: ILink}, index: number) => (
           <li
             className='inline-flex py-[0.625rem] px-[1.25rem] justify-center items-center cursor-pointer relative'
-            key={menuItem.link.title}
+            key={index}
           >
             <Link
               href={menuItem.link.url}

@@ -78,7 +78,7 @@ const ListenToCustomer = ({
           }}
         >
           {listenToCustomer?.representative_face?.map((item, index) => (
-            <SwiperSlide key={item.thumbnail.id}>
+            <SwiperSlide key={index}>
               <Image
                 src={item.thumbnail.url}
                 alt={item.thumbnail.alt}

@@ -11,10 +11,10 @@ interface WorkingRulesProps {
 export const WorkingRules = ({rules}: WorkingRulesProps) => {
   return (
     <ul className='grid grid-cols-2 gap-y-[0.88rem] md:gap-x-[2.75rem] mb-[2.375rem] list-none'>
-      {rules?.map((item) => (
+      {rules?.map((item, index) => (
         <li
           className='flex items-center'
-          key={item.rule}
+          key={index}
         >
           <Image
             alt=''

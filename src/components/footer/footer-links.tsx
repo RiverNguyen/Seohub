@@ -1,8 +1,8 @@
 import {cn} from '@/lib/utils'
+import type {Footer} from '@/types/footer.interface'
+import gsap from 'gsap'
 import Image from 'next/image'
 import {useEffect, useRef} from 'react'
-import gsap from 'gsap'
-import type {Footer} from '@/types/footer.interface'
 
 interface FooterLinksProps {
   footer: Footer
@@ -42,7 +42,7 @@ const FooterLinks = ({
       <nav className='pt-14 mr-[4.125rem]'>
         <ul>
           {footer.footer_link.map((item, index) => (
-            <li key={item.link.url}>
+            <li key={index}>
               <a
                 href={item.link.url}
                 onMouseEnter={() => setHoveredIndex(index)}

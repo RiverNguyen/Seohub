@@ -22,9 +22,9 @@ const Definition = ({definition}: {definition: Definition}) => {
 
         <div className='flex w-[92.39375rem] xsm:flex-col-reverse max-w-full items-start justify-between mx-auto relative z-50 xsm:py-[0.625rem]'>
           <div className='grid grid-cols-2 gap-[0.75rem] mt-[4.275rem] xsm:px-[0.625rem] xsm:mt-[1.125rem] xsm:pb-[3.125rem]'>
-            {definition?.definition_tag?.map((item) => (
+            {definition?.definition_tag?.map((item, index) => (
               <DefinitionCard
-                key={item.definition_tag_content}
+                key={index}
                 emp={item.definition_tag_emp}
                 value={item.value}
                 content={item.definition_tag_content}

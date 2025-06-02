@@ -1,3 +1,4 @@
+'use client'
 import {IBanner} from '@/types/banner.interface'
 import BannerMobile from './components/banner-mobile'
 import BannerPC from './components/banner-pc'

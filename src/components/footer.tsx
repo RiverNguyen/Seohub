@@ -2,15 +2,15 @@
 
 import fetchData from '@/fetches/fetchData'
 import type {Credential, Footer, SocialList} from '@/types/footer.interface'
-import Image from 'next/image'
-import {useEffect, useState, useRef, useLayoutEffect} from 'react'
 import gsap from 'gsap'
 import ScrollTrigger from 'gsap/ScrollTrigger'
-import FooterLogo from './footer/footer-logo'
-import FooterLinks from './footer/footer-links'
+import Image from 'next/image'
+import {useEffect, useLayoutEffect, useRef, useState} from 'react'
+import FooterCopyright from './footer/footer-copyright'
 import FooterCredential from './footer/footer-credential'
 import FooterHotline from './footer/footer-hotline'
-import FooterCopyright from './footer/footer-copyright'
+import FooterLinks from './footer/footer-links'
+import FooterLogo from './footer/footer-logo'
 
 // Đăng ký ScrollTrigger ở cấp độ module
 if (typeof window !== 'undefined') {
@@ -27,43 +27,42 @@ const Footer = () => {
   const overflowRef = useRef<HTMLDivElement>(null)
 
   // // Animation khi scroll đến footer
-  // useLayoutEffect(() => {
-  //   if (!footerRef.current || !overflowRef.current || isLoading) return
+  useLayoutEffect(() => {
+    if (!footerRef.current || !overflowRef.current || isLoading) return
 
-  //   // Xóa các trigger cũ
-  //   ScrollTrigger.getAll().forEach((trigger) => trigger.kill())
+    // Xóa các trigger cũ
+    // ScrollTrigger.getAll().forEach((trigger) => trigger.kill())
 
-  //   const footer = footerRef.current
-  //   const overlay = overflowRef.current
+    const footer = footerRef.current
+    const overlay = overflowRef.current
 
-  //   gsap.set(footer, {marginTop: 0})
-  //   gsap.set(overlay, {opacity: 0})
+    gsap.set(footer, {marginTop: 0})
+    gsap.set(overlay, {opacity: 0})
 
-  //   // Delay khởi tạo để ScrollSmoother chắc chắn đã xong
-  //   const timeout = setTimeout(() => {
-  //     const tl = gsap.timeline({
-  //       scrollTrigger: {
-  //         trigger: footer,
-  //         start: 'top bottom',
-  //         end: 'top center',
-  //         scrub: 1,
-  //         markers: true, // Xóa sau khi test
-  //       },
-  //     })
+    // Delay khởi tạo để ScrollSmoother chắc chắn đã xong
+    const timeout = setTimeout(() => {
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: footer,
+          start: 'top bottom',
+          end: 'top center',
+          scrub: 1,
+          // markers: true,
+        },
+      })
 
-  //     tl.to(footer, {marginTop: '-100px', duration: 1}).to(
-  //       overlay,
-  //       {opacity: 1, duration: 1},
-  //       '<',
-  //     )
-  //   }, 150)
+      tl.to(footer, {marginTop: '-100px', duration: 1}).to(
+        overlay,
+        {opacity: 1, duration: 1},
+        '<',
+      )
+    }, 150)
 
-  //   // Cleanup
-  //   return () => {
-  //     clearTimeout(timeout)
-  //     ScrollTrigger.getAll().forEach((trigger) => trigger.kill())
-  //   }
-  // }, [footer, isLoading])
+    // Cleanup
+    return () => {
+      clearTimeout(timeout)
+    }
+  }, [footer, isLoading])
 
   // Lấy dữ liệu footer từ API
   useEffect(() => {
