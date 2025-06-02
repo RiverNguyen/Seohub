@@ -1,3 +1,5 @@
+'use client'
+
 import {Commitment} from '@/types/workflow.interface'
 import {gsap} from 'gsap'
 import Image from 'next/image'
@@ -12,6 +14,7 @@ export default function SectionField({commitment}: {commitment: Commitment}) {
   const fieldOfActivityListImageRef = useRef<HTMLDivElement>(null)
   const badge__labelTextRef = useRef<HTMLDivElement>(null)
   useEffect(() => {
+    if (typeof window === 'undefined') return
     // Pin section
     gsap.to(fieldOfActivityRef.current, {
       scrollTrigger: {

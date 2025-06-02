@@ -19,6 +19,7 @@ const ValueToCustomer = ({
   const triggerEndSectionRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
+    if (typeof window === 'undefined') return
     const vtcWrapperEl = document.querySelector(
       '.vtc__wrapper',
     ) as HTMLElement | null

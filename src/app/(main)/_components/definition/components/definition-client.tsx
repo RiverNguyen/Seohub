@@ -6,6 +6,9 @@ import gsap from 'gsap'
 
 const DefinitionClient = () => {
   useEffect(() => {
+    // Ensure we're in the browser environment
+    if (typeof window === 'undefined') return
+
     initializeSVGAnimations()
 
     // Badge animation

@@ -48,6 +48,7 @@ function animateSVGPath(
 export function initializeSVGAnimations(
   config: SVGAnimationConfig = DEFAULT_CONFIG,
 ): void {
+  if (typeof window === 'undefined') return
   const svgElement = document.getElementById('triangleSVG')
   if (!svgElement) return
 
