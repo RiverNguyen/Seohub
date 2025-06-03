@@ -10,11 +10,13 @@ gsap.registerPlugin(useGSAP, ScrollTrigger, ScrollSmoother)
 
 export default function GsapProvider({children}: {children: React.ReactNode}) {
   useGSAP(() => {
-    ScrollSmoother.create({
-      smooth: 1,
-      effects: true,
-      smoothTouch: false,
-    })
+    if (window.innerWidth > 639) {
+      ScrollSmoother.create({
+        smooth: 1,
+        effects: true,
+        smoothTouch: false,
+      })
+    }
   }, [])
   return (
     <div id='smooth-wrapper'>

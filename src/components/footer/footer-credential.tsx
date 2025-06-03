@@ -1,5 +1,5 @@
-import Image from 'next/image'
 import type {Credential} from '@/types/footer.interface'
+import Image from 'next/image'
 import Link from 'next/link'
 
 interface FooterCredentialProps {
@@ -45,7 +45,7 @@ const FooterCredential = ({credential}: FooterCredentialProps) => {
           <Link
             target='_blank'
             href={credential.link_download.url}
-            rel='noopener noreferrer'
+            // rel='noopener noreferrer'
             className='relative z-10 cursor-pointer border-none inline-flex max-w-[47.22188rem] bg-[#293844] pr-[0.4375rem] h-[2.925rem] group xsm:h-[2rem]
             xsm:w-[5rem] xsm:mb-[0.725rem]'
           >

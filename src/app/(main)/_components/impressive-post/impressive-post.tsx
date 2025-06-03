@@ -1,6 +1,6 @@
 'use client'
 
-import {Skeleton} from '@/components/ui/skeleton'
+import CustomBorderedButton from '@/components/bordered-button'
 import fetchData from '@/fetches/fetchData'
 import {Category} from '@/types/category.interface'
 import type {ImpressivePost, Post} from '@/types/post.interface'
@@ -14,34 +14,43 @@ import CategoryTabs from './components/category-tabs'
 import FeaturedPost from './components/featured-post'
 import ImpressivePostHeader from './components/impressive-post-header'
 import PostGrid from './components/post-grid'
-import CustomBorderedButton from '@/components/bordered-button'
 
-const ImpressivePost = ({impressivePost}: {impressivePost: ImpressivePost}) => {
+const ImpressivePost = ({
+  impressivePost,
+  categoriesData,
+  datafilteredPosts,
+}: {
+  impressivePost: ImpressivePost
+  categoriesData: Category[]
+  datafilteredPosts: Post[]
+}) => {
   const [selectedCategory, setSelectedCategory] = useState('all')
   const [filteredPosts, setFilteredPosts] = useState<Post[]>([])
   const [categories, setCategories] = useState<Category[]>([])
 
-  const [isLoading, setIsLoading] = useState(true)
   const [isLoadingPosts, setIsLoadingPosts] = useState(false)
 
+  // useEffect(() => {
+  //   const fetchInitialData = async () => {
+  //     try {
+  //       const categoriesData = await fetchData({
+  //         api: '/v2/categories',
+  //         method: 'GET',
+  //       })
+
+  //       setCategories(categoriesData)
+  //       await fetchPostsByCategory('all')
+  //     } finally {
+  //       setIsLoading(false)
+  //     }
+  //   }
+
+  //   fetchInitialData()
+  // }, [])
   useEffect(() => {
-    const fetchInitialData = async () => {
-      try {
-        const categoriesData = await fetchData({
-          api: '/v2/categories',
-          method: 'GET',
-        })
-
-        setCategories(categoriesData)
-        await fetchPostsByCategory('all')
-      } finally {
-        setIsLoading(false)
-      }
-    }
-
-    fetchInitialData()
-  }, [])
-
+    setCategories(categoriesData)
+    setFilteredPosts(datafilteredPosts)
+  }, [categoriesData, datafilteredPosts])
   const fetchPostsByCategory = async (categorySlug: string) => {
     setIsLoadingPosts(true)
     try {
@@ -64,42 +73,10 @@ const ImpressivePost = ({impressivePost}: {impressivePost: ImpressivePost}) => {
     setSelectedCategory(slug)
     fetchPostsByCategory(slug)
   }
-
-  if (isLoading) {
-    return (
-      <section className='relative w-full bg-white py-[4.25rem] z-10'>
-        <div className='w-[93.375rem] mx-auto'>
-          <div className='flex items-center justify-between mb-10'>
-            <Skeleton className='h-[4rem] w-[30rem]' />
-            <Skeleton className='h-[3rem] w-[10rem]' />
-          </div>
-          <div className='relative mb-[0.9375rem]'>
-            <div className='flex gap-8'>
-              <Skeleton className='h-8 w-32' />
-              <Skeleton className='h-8 w-32' />
-              <Skeleton className='h-8 w-32' />
-            </div>
-          </div>
-          <div className='flex justify-between w-full'>
-            <Skeleton className='h-[29.4375rem] w-[47rem] rounded-[1.25rem]' />
-            <div className='grid grid-cols-2 gap-[0.8125rem] w-[45.5625rem]'>
-              {[1, 2, 3, 4].map((i) => (
-                <Skeleton
-                  key={i}
-                  className='h-[14.375rem] rounded-[1.25rem]'
-                />
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-    )
-  }
-
   return (
     <section
       id='impressive-post'
-      className='relative w-full bg-white py-[4.25rem] z-10'
+      className='relative w-full bg-white py-[4.25rem] z-[11]'
     >
       <div className='w-[93.375rem] mx-auto xsm:w-full'>
         <ImpressivePostHeader impressivePost={impressivePost} />

@@ -1,14 +1,14 @@
-import Image from 'next/image'
-import {Swiper, SwiperSlide} from 'swiper/react'
-import {Autoplay, EffectFade, Pagination} from 'swiper/modules'
 import type {IBanner} from '@/types/banner.interface'
-import {useState, useRef} from 'react'
+import Image from 'next/image'
+import {useRef, useState} from 'react'
 import type {Swiper as SwiperType} from 'swiper'
+import {Autoplay, EffectFade, Pagination} from 'swiper/modules'
+import {Swiper, SwiperSlide} from 'swiper/react'
 
-import 'swiper/css'
-import 'swiper/css/pagination'
-import 'swiper/css/effect-fade'
 import {cn} from '@/lib/utils'
+import 'swiper/css'
+import 'swiper/css/effect-fade'
+import 'swiper/css/pagination'
 
 interface BannerMobileProps {
   bannerSlides: IBanner[]
@@ -172,7 +172,7 @@ const BannerMobile = ({bannerSlides}: BannerMobileProps) => {
         loop={true}
         speed={1000}
       >
-        {bannerSlides.map((item, index: number) => (
+        {bannerSlides?.map((item, index: number) => (
           <SwiperSlide key={index}>
             <p
               className={`text-[1.25rem] leading-[1.75rem] text-black w-[18.75rem] pl-[1rem] mt-[0.625rem] transition-opacity duration-700 ${

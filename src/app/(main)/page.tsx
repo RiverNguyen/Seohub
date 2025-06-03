@@ -7,15 +7,26 @@ import ValueToCustomer from '@/app/(main)/_components/value-to-customer/value-to
 import fetchData from '@/fetches/fetchData'
 
 export default async function Page() {
-  const [data] = await Promise.all([
+  const [data, categoriesData, filteredPosts] = await Promise.all([
     fetchData({
       api: `/v2/pages/11?_fields=acf&acf_format=standard#`,
       option: {
         next: {revalidate: 10},
       },
     }),
+    fetchData({
+      api: `/v2/categories`,
+      option: {
+        next: {revalidate: 10},
+      },
+    }),
+    fetchData({
+      api: `/api/v1/posts`,
+      option: {
+        next: {revalidate: 10},
+      },
+    }),
   ])
-
   return (
     <>
       <Banner bannerSlides={data?.acf?.banner_slides} />
@@ -25,7 +36,11 @@ export default async function Page() {
         workflow={data?.acf?.workflow}
         commitment={data?.acf?.commitment}
       />
-      <ImpressivePost impressivePost={data?.acf?.impressive_post} />
+      <ImpressivePost
+        datafilteredPosts={filteredPosts}
+        categoriesData={categoriesData}
+        impressivePost={data?.acf?.impressive_post}
+      />
       <ListenToCustomer listenToCustomer={data?.acf?.listen_to_customer} />
     </>
   )

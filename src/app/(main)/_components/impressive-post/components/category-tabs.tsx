@@ -31,9 +31,9 @@ const CategoryTabs = ({
         >
           <p className='mr-[1.94rem]'>Tin tức mới nhất</p>
         </li>
-        {categoriesHavePosts.map((item: Category) => (
+        {categoriesHavePosts.map((item: Category, index: number) => (
           <li
-            key={item.id}
+            key={index}
             data-slug={item.slug}
             onClick={() => onCategoryClick(item.slug)}
             className={cn(
