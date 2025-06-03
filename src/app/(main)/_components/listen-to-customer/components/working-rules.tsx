@@ -10,7 +10,7 @@ interface WorkingRulesProps {
 
 export const WorkingRules = ({rules}: WorkingRulesProps) => {
   return (
-    <ul className='grid grid-cols-2 gap-y-[0.88rem] md:gap-x-[2.75rem] mb-[2.375rem] list-none'>
+    <ul className='grid grid-cols-2 gap-y-[0.88rem] md:gap-x-[2.75rem] mb-[2.375rem] list-none xsm:grid-cols-1 xsm:gap-y-[0.44rem]'>
       {rules?.map((item, index) => (
         <li
           className='flex items-center'
@@ -23,7 +23,7 @@ export const WorkingRules = ({rules}: WorkingRulesProps) => {
             width={10.79296}
             height={15.856}
           />
-          <span className='flex-1 text-white text-[1.125rem] font-normal leading-[139%]'>
+          <span className='flex-1 text-white text-[1.125rem] font-normal leading-[139%] xsm:mb-body-14'>
             {item.rule}
           </span>
         </li>

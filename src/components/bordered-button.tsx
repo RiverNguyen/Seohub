@@ -14,7 +14,7 @@ const CustomBorderedButton: React.FC<CustomBorderedButtonProps> = ({
   children,
 }) => {
   return (
-    <div className='group relative inline-flex cursor-pointer px-[0.1875rem] min-w-[13.875rem] sm:min-h-[2.625rem] min-h-[2.125rem] transition-all p-[0.1875rem]'>
+    <div className='group relative inline-flex cursor-pointer px-[0.1875rem] min-w-[13.875rem] sm:min-h-[2.625rem] min-h-[2.125rem] transition-all p-[0.1875rem] xsm:w-[5rem]'>
       {/* Corners */}
       <div
         className='absolute top-0 left-0 w-[3px] h-[3px]'
@@ -54,7 +54,7 @@ const CustomBorderedButton: React.FC<CustomBorderedButtonProps> = ({
       {/* Inner Content */}
       <div className='relative flex items-center w-full h-full bg-white'>
         {/* Text Content */}
-        <div className='relative z-10 text-black text-xs font-normal px-[3.1875rem] sm:px-[3.1875rem]  transition-colors duration-300 delay-100 group-hover:text-white'>
+        <div className='relative z-10 text-black text-xs font-normal px-[3.1875rem]  transition-colors duration-300 delay-100 group-hover:text-white xsm:whitespace-nowrap'>
           {children}
         </div>
 
@@ -68,7 +68,7 @@ const CustomBorderedButton: React.FC<CustomBorderedButtonProps> = ({
         />
 
         {/* Icon */}
-        <div className='absolute top-1/2 -translate-y-1/2 right-[0.65rem] sm:right-[0.98rem] sm:group-hover:right-[4.26rem] transition-all duration-[600ms] ease-[cubic-bezier(0.67,0,0.05,1)] flex items-center justify-center'>
+        <div className='absolute top-1/2 -translate-y-1/2 right-[0.65rem] sm:right-[0.98rem] sm:group-hover:right-[4.26rem] transition-all duration-[600ms] ease-[cubic-bezier(0.67,0,0.05,1)] flex items-center justify-center xsm:right-[1rem]'>
           <svg
             xmlns='http://www.w3.org/2000/svg'
             className='w-[0.46806rem] h-[0.68763rem] sm:w-[0.6745rem] sm:h-[0.991rem]'

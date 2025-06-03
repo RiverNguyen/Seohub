@@ -66,7 +66,7 @@ const Footer = ({
       ></div>
       <footer
         ref={footerRef}
-        className='relative overflow-hidden border border-[#f1f1f1] h-[24em] will-change-transform'
+        className='relative overflow-hidden border border-[#f1f1f1] h-[24em] will-change-transform xsm:h-[31.2rem]'
       >
         <div className='absolute top-[-2.675rem] left-[-6.875rem] w-[57.5625rem] h-[27.8125rem] opacity-50'>
           <Image
@@ -76,12 +76,12 @@ const Footer = ({
             alt={footer.logo_footer.alt}
             width={57.5625}
             height={27.8125}
-            className='w-full h-full object-cover'
+            className='w-full h-full object-cover xsm:hidden'
           />
         </div>
 
-        <div className='w-[93.5625rem] h-[24.9375rem] mx-auto flex'>
-          <div className='flex w-[57.45rem] justify-between border-r border-[#f1f1f1]'>
+        <div className='w-[93.5625rem] h-[24.9375rem] mx-auto flex xsm:w-full xsm:h-auto xsm:flex-col-reverse'>
+          <div className='flex w-[57.45rem] justify-between border-r border-[#f1f1f1] xsm:flex-col-reverse xsm:w-full xsm:h-auto'>
             <FooterLogo
               footer={footer}
               globalSocial={social}

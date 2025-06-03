@@ -4,6 +4,7 @@ import SectionField from '@/app/(main)/_components/process-and-field/components/
 import {WorkflowBackground} from '@/app/(main)/_components/process-and-field/components/workflow-background'
 import {WorkflowItem} from '@/app/(main)/_components/process-and-field/components/workflow-item'
 import {WorkflowLastItem} from '@/app/(main)/_components/process-and-field/components/workflow-last-item'
+import {CustomBadge} from '@/components/custom-badge'
 import {Commitment, Workflow} from '@/types/workflow.interface'
 import {gsap} from 'gsap'
 import {ScrollTrigger} from 'gsap/ScrollTrigger'
@@ -23,7 +24,16 @@ const ProcessAndField = ({
 
     const itemElements =
       containerRef.current.querySelectorAll<HTMLElement>('.item-snapping')
+    const layerBackground = document.getElementById('layer-background')
 
+    const lastSection = document.querySelector('.item-snapping.last-item')
+
+    // Set z-index for items
+    itemElements.forEach((el, index) => {
+      el.style.zIndex = String(index + 1)
+    })
+
+    // Create timeline for desktop animation
     const timeline = gsap.timeline({
       scrollTrigger: {
         trigger: '#snapping-section',
@@ -35,6 +45,8 @@ const ProcessAndField = ({
       },
       defaults: {ease: 'none'},
     })
+
+    // Desktop animation
     itemElements.forEach((item, index) => {
       if (index === itemElements.length - 1) {
         timeline.to(
@@ -58,9 +70,35 @@ const ProcessAndField = ({
       }
     })
 
+    // Mobile animation
+    if (window.innerWidth <= 639) {
+      // Pin background layer
+      ScrollTrigger.create({
+        trigger: '#snapping-section',
+        start: 'top top',
+        end: '50% bottom',
+        pin: layerBackground,
+        pinSpacing: false,
+        anticipatePin: 1,
+        // 			markers: true,
+      })
+
+      const sections = gsap.utils.toArray<HTMLElement>('.card')
+      sections.forEach((section, i) => {
+        const startpin = 68.25 * i
+        ScrollTrigger.create({
+          trigger: section,
+          start: `top ${startpin}`,
+          endTrigger: lastSection,
+          end: `top ${67.5 * sections.length}`,
+          pin: true,
+          pinSpacing: false,
+        })
+      })
+    }
+
     return () => {
       ScrollTrigger.getAll().forEach((trigger) => trigger.kill())
-      timeline.kill()
     }
   }, [workflow, commitment])
 
@@ -72,12 +110,12 @@ const ProcessAndField = ({
         <section
           id='snapping-section'
           ref={containerRef}
-          className='relative w-full bg-gradient-to-b from-[#548beb] to-[#1767f0]'
+          className='relative w-full bg-gradient-to-b from-[#548beb] to-[#1767f0] xsm:z-50'
         >
           <WorkflowBackground />
-          <div className='absolute top-[5.69rem] left-[3.12rem] right-0 h-[8.32188rem] z-10'>
+          <div className='absolute top-[5.69rem] left-[3.12rem] right-0 h-[8.32188rem] z-10 xsm:static xsm:top-0 xsm:left-0 xsm:right-0 xsm:z-50'>
             {workflow.tag && (
-              <div className='badge__label flex flex-col m-[0.625rem] w-max absolute top-[-25%]'>
+              <div className='badge__label flex flex-col m-[0.625rem] w-max absolute top-[-25%] xsm:static xsm:top-0 xsm:z-50'>
                 <h2
                   dangerouslySetInnerHTML={{
                     __html: workflow.tag,
@@ -86,8 +124,17 @@ const ProcessAndField = ({
                 ></h2>
               </div>
             )}
+            <div className='absolute bottom-1/2 left-0 w-max xsm:bottom-[100%] xsm:left-[-1.65rem]'>
+              <CustomBadge
+                classPosition='size-[1.3825rem] xsm:size-[0.625rem]'
+                className='xsm:px-1 xsm:py-0'
+                classText='text-white text-[1.625rem] font-normal leading-[134%] xsm:text-[0.75rem]'
+              >
+                {workflow.tag}
+              </CustomBadge>
+            </div>
             <div
-              className='absolute left-0 w-full text-white text-[2.875rem] leading-[1.39] h-[4.16094rem]'
+              className='absolute left-0 w-full text-white text-[2.875rem] leading-[1.39] h-[4.16094rem] xsm:mb-title-h3 xsm:left-[-1.65rem] [&_p]:before:content-[" "] xsm:[&_p]:before:w-[3.65rem] xsm:[&_p]:before:h-[0.125rem] [&_p]:before:inline-flex [&_p]:before:w-[16rem]'
               dangerouslySetInnerHTML={{
                 __html: workflow.title,
               }}
@@ -97,7 +144,7 @@ const ProcessAndField = ({
             id=''
             xmlns='http://www.w3.org/2000/svg'
             viewBox='0 0 1240 224'
-            className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[77.47363rem] h-[13.94525rem] transition-all duration-[0.7s]'
+            className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[77.47363rem] h-[13.94525rem] transition-all duration-[0.7s] xsm:w-[19.875rem] xsm:h-[3.5625rem]'
           >
             <g clipPath='url(#clip0_906_7934)'>
               <path
@@ -144,7 +191,7 @@ const ProcessAndField = ({
               </clipPath>
             </defs>
           </svg>
-          <div className='overflow-x-hidden absolute bottom-0 flex w-full border-t border-[#e6e8ea] z-10'>
+          <div className='overflow-x-hidden absolute bottom-0 flex w-full border-t border-[#e6e8ea] z-10 xsm:flex-col'>
             {workflow?.workflow_list?.map((item, index) => (
               <WorkflowItem
                 key={index}

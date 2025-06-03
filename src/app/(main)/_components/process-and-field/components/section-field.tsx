@@ -13,6 +13,7 @@ export default function SectionField({commitment}: {commitment: Commitment}) {
   const fieldOfActivityTitleRef = useRef<HTMLDivElement>(null)
   const fieldOfActivityListImageRef = useRef<HTMLDivElement>(null)
   const badge__labelTextRef = useRef<HTMLDivElement>(null)
+
   useEffect(() => {
     if (typeof window === 'undefined') return
     // Pin section
@@ -82,34 +83,34 @@ export default function SectionField({commitment}: {commitment: Commitment}) {
       ref={pinSectionRef}
       className='bg-[#f4f4f4]'
     >
-      <div className='h-screen'>
+      <div className='h-screen xsm:overflow-hidden'>
         <div
           ref={fieldOfActivityRef}
           className='w-full absolute h-screen z-[11]'
         >
           <div className='hidden mb-4 mt-[3.75rem] pl-[1.6rem]'>
-            <div className='relative w-max flex h-[1.374rem] px-[0.21694rem] py-[0.07231rem] justify-center items-center bg-[#1550e5]'>
+            <div className='relative w-max xsm:w-full flex h-[1.374rem] px-[0.21694rem] py-[0.07231rem] justify-center items-center bg-[#1550e5]'>
               <p className='text-white text-xs font-normal leading-[134%]'>
                 {commitment.tag ?? ''}
               </p>
             </div>
           </div>
           <Image
-            className='absolute bottom-0 left-[-4.81rem] w-[75rem] h-[36.25rem] z-[-1]'
+            className='absolute bottom-0 left-[-4.81rem] w-[75rem] h-[36.25rem] z-[-1] xsm:hidden'
             src='https://seohub.okhub-tech.com/wp-content/uploads/2025/04/foot-r-img-bg3.webp'
             alt=''
             width={750}
             height={362.5}
           />
           <Image
-            className='hidden absolute w-[49.875rem] h-[24.125rem] left-[-8.44rem] top-[-0.37rem]'
+            className='hidden absolute w-[49.875rem] h-[24.125rem] left-[-8.44rem] top-[-0.37rem] xsm:block xsm:top-[0.25rem] xsm:left-0 xsm:w-[21.4375rem] xsm:h-[11.425rem]'
             src='https://seohub.okhub-tech.com/wp-content/uploads/2025/04/foot-r-img-bg3-mb.webp'
             alt=''
             width={498.75}
             height={241.25}
           />
           <Image
-            className='absolute top-0 left-[-13.81rem] w-[97.4205rem] h-[60.88781rem] z-[-1] pointer-events-none'
+            className='absolute top-0 left-[-13.81rem] w-[97.4205rem] h-[60.88781rem] z-[-1] pointer-events-none block xsm:hidden'
             src='https://seohub.okhub-tech.com/wp-content/uploads/2025/04/Img_mask-group-scaled.webp'
             alt=''
             width={974.205}
@@ -117,7 +118,7 @@ export default function SectionField({commitment}: {commitment: Commitment}) {
           />
           <div
             ref={fieldOfActivityTitleRef}
-            className='absolute z-[1] left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[56.90819rem] text-[#9c9c9c] text-[2.875rem] font-normal leading-[1.39]'
+            className='absolute z-[1] left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[56.90819rem] text-[#9c9c9c] text-[2.875rem] font-normal leading-[1.39] xsm:w-[21.4375rem] xsm:text-[1.875rem] xsm:top-[14rem] xsm:left-[12rem]'
           >
             <div
               dangerouslySetInnerHTML={{
@@ -136,13 +137,13 @@ export default function SectionField({commitment}: {commitment: Commitment}) {
       </div>
       <div
         ref={fieldOfActivityListImageRef}
-        className='grid grid-cols-3 p-4 gap-y-[25rem] relative z-[11] pb-20 mt-20'
+        className='grid grid-cols-3 p-4 gap-y-[25rem] relative z-[11] pb-20 mt-20 overflow-hidden'
       >
         {commitment?.img?.map((item, index: number) => {
           return (
             <div
               key={index}
-              className='fieldOfActivity_listImage-img w-full h-full flex z-[-1] blur-[6.9px]'
+              className='fieldOfActivity_listImage-img w-full h-full flex z-[-1] blur-[6.9px] xsm:w-[15.25rem] xsm:h-[11.425rem]'
               data-speed={`clamp(${speeds[index % count]})`}
             >
               <Image
@@ -150,7 +151,7 @@ export default function SectionField({commitment}: {commitment: Commitment}) {
                 alt={item.alt}
                 width={item.width}
                 height={item.height}
-                className='w-[21.1875rem] h-[15.875rem] mx-auto rounded-[0.625rem] object-cover'
+                className='w-[21.1875rem] h-[15.875rem] mx-auto rounded-[0.625rem] object-cover xsm:w-[15.25rem] xsm:h-[11.425rem]'
                 // data-speed={`clamp(${speeds[index % count]})`}
               />
             </div>

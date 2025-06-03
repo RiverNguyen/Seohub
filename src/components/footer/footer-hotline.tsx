@@ -9,7 +9,7 @@ const FooterHotline = ({footer}: FooterHotlineProps) => {
   if (!footer?.hotline) return null
 
   return (
-    <div className='flex items-center justify-between h-[9.675rem] pl-[2.125rem]'>
+    <div className='flex items-center justify-between h-[9.675rem] pl-[2.125rem] xsm:hidden'>
       <div className='flex flex-col'>
         <p className='text-[#999] text-sm font-normal leading-6'>
           {footer.hotline.title || ''}

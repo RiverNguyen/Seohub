@@ -25,26 +25,34 @@ const ListenToCustomer = ({
   return (
     <section
       id='listen-to-customer'
-      className='h-[37.5rem] relative'
+      className='h-[37.5rem] relative xsm:overflow-x-hidden xsm:h-[44rem]'
     >
       <Image
         src='https://seohub.okhub-tech.com/wp-content/uploads/2025/05/Frame-2147258475.svg'
         alt='listen-to-customer-bg'
         fill
-        className='object-cover'
+        className='object-cover xsm:hidden'
+      />
+      <Image
+        src={
+          'https://seohub.okhub-tech.com/wp-content/uploads/2025/06/Frame-2147258852.svg'
+        }
+        alt='listen-to-customer-bg'
+        className='object-cover xsm:block hidden'
+        width={1000}
+        height={1000}
       />
       <h2
-        className='text-[#0725B7] text-[2.875rem] font-normal leading-[4rem] absolute top-[9.75rem] left-[3.075rem] whitespace-nowrap
-      [&_br]:hidden'
+        className='text-[#0725B7] text-[2.875rem] font-normal leading-[4rem] absolute top-[9.75rem] left-[3.075rem] xsm:mb-title-h3 xsm:[&_br]:block [&_br]:hidden xsm:top-[1rem] xsm:left-[0.75rem]'
         dangerouslySetInnerHTML={{
           __html: listenToCustomer.title,
         }}
       ></h2>
 
-      <div className='absolute z-[5] left-[3.08rem] top-[19.76rem] w-[47.25rem] md:block'>
+      <div className='absolute z-[5] left-[3.08rem] top-[19.76rem] w-[47.25rem] md:block xsm:left-[0.75rem] xsm:top-[8rem]'>
         <WorkingRules rules={listenToCustomer.working_rule} />
 
-        <div className='absolute'>
+        <div className='absolute xsm:hidden'>
           <a href={listenToCustomer?.contact?.url}>
             <CustomBorderedButton
               color='#1550E5'
@@ -57,7 +65,7 @@ const ListenToCustomer = ({
         </div>
       </div>
 
-      <div className='absolute z-[10] w-[37.375rem] h-[39.375rem] bottom-0 right-[6rem] md:block'>
+      <div className='absolute z-[10] w-[37.375rem] h-[39.375rem] bottom-0 right-[6rem] md:block xsm:w-[21.975rem] xsm:h-[23.125rem] xsm:bottom-[0rem] xsm:right-[0rem]'>
         <Stars />
         <Swiper
           direction='horizontal'
@@ -84,7 +92,7 @@ const ListenToCustomer = ({
                 alt={item.thumbnail.alt}
                 width={item.thumbnail.width}
                 height={item.thumbnail.height}
-                className='object-cover w-[37.375rem] h-[39.375rem]'
+                className='object-cover w-[37.375rem] h-[39.375rem] xsm:w-[21.975rem] xsm:h-[23.125rem]'
               />
               <Badges
                 firstRule={item.first_rule}

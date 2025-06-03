@@ -9,9 +9,9 @@ interface ImpressivePostHeaderProps {
 
 const ImpressivePostHeader = ({impressivePost}: ImpressivePostHeaderProps) => {
   return (
-    <div className='flex items-center justify-between mb-10'>
+    <div className='flex items-center justify-between mb-10 xsm:mb-[1.5rem]'>
       <h2
-        className='text-[2.875rem] leading-[4rem] font-normal text-[#0725b7]'
+        className='text-[2.875rem] leading-[4rem] font-normal text-[#0725b7] xsm:mb-title-h3 xsm:pl-[0.75rem]'
         dangerouslySetInnerHTML={{
           __html: impressivePost?.title,
         }}
@@ -20,7 +20,7 @@ const ImpressivePostHeader = ({impressivePost}: ImpressivePostHeaderProps) => {
         impressivePost?.discovery_post?.url && (
           <a
             href={impressivePost?.discovery_post?.url}
-            className='vtc__link-detail'
+            className='vtc__link-detail xsm:hidden'
           >
             <CustomBorderedButton
               color='#1550E5'

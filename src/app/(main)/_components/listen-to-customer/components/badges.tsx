@@ -11,7 +11,7 @@ interface BadgesProps {
 export const Badges = ({firstRule, secondRule, index, onRef}: BadgesProps) => {
   return (
     <>
-      <div className='absolute top-[17rem] left-[1.9375rem] overflow-hidden'>
+      <div className='absolute top-[17rem] left-[1.9375rem] overflow-hidden xsm:top-[9rem] xsm:left-[0.75rem]'>
         <div
           ref={(el) => {
             onRef(el, index * 2)
@@ -20,14 +20,14 @@ export const Badges = ({firstRule, secondRule, index, onRef}: BadgesProps) => {
           <CustomBadge
             background='#01D3D0'
             align='top-right'
-            classText='text-[1.208rem] px-1.5 py-0'
+            classText='text-[1.208rem] px-1.5 py-0 xsm:text-[0.828rem]'
             className='w-fit'
           >
             {firstRule}
           </CustomBadge>
         </div>
       </div>
-      <div className='absolute top-[19.25rem] left-[3.8725rem] overflow-hidden'>
+      <div className='absolute top-[19.25rem] left-[3.8725rem] overflow-hidden xsm:top-[10.75rem] xsm:left-[1.5rem]'>
         <div
           ref={(el) => {
             onRef(el, index * 2 + 1)
@@ -36,7 +36,7 @@ export const Badges = ({firstRule, secondRule, index, onRef}: BadgesProps) => {
           <CustomBadge
             background='#FF7300'
             align='bottom-left'
-            classText='text-[1.208rem] px-1.5 py-0'
+            classText='text-[1.208rem] px-1.5 py-0 xsm:text-[0.828rem]'
             className='w-fit'
           >
             {secondRule}

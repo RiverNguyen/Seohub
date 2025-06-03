@@ -1,141 +1,308 @@
 import Image from 'next/image'
 import {Swiper, SwiperSlide} from 'swiper/react'
-import {Pagination} from 'swiper/modules'
+import {Autoplay, EffectFade, Pagination} from 'swiper/modules'
 import type {IBanner} from '@/types/banner.interface'
+import {useState, useRef} from 'react'
+import type {Swiper as SwiperType} from 'swiper'
 
 import 'swiper/css'
 import 'swiper/css/pagination'
+import 'swiper/css/effect-fade'
+import {cn} from '@/lib/utils'
 
 interface BannerMobileProps {
   bannerSlides: IBanner[]
 }
 
 const BannerMobile = ({bannerSlides}: BannerMobileProps) => {
+  const [showAfter, setShowAfter] = useState(false)
+  const [showRightText, setShowRightText] = useState(false)
+  const swiperRef = useRef<{swiper: SwiperType} | null>(null)
+
+  const handleToggleImage = () => {
+    setShowAfter(!showAfter)
+    setShowRightText(!showRightText)
+
+    // Stop autoplay when toggled
+    if (swiperRef.current?.swiper) {
+      if (!showAfter) {
+        swiperRef.current.swiper.autoplay.stop()
+      } else {
+        swiperRef.current.swiper.autoplay.start()
+      }
+    }
+  }
+
   return (
-    <div
+    <section
       className='w-full relative h-full hidden xsm:block'
       id='banner-mb'
     >
+      <h2 className='flex items-center gap-x-[0.25rem] text-[#1550E5] text-[0.875rem] font-medium pl-[1rem] mt-[1.5rem] mb-[1.025rem]'>
+        <Image
+          src='https://seohub.okhub-tech.com/wp-content/uploads/2025/06/Frame-21472583751.svg'
+          alt=''
+          height={20}
+          width={22}
+        />
+        SEOhub cho rằng
+      </h2>
+      <hr className='mx-[1rem] border-[0.0625rem] border-[#E6E6E6]' />
+
+      <style
+        jsx
+        global
+      >{`
+        .banner-mb .swiper-pagination {
+          bottom: 3.95rem !important;
+          width: 18.77331rem !important;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          left: 53.5% !important;
+          transform: translateX(-50%);
+          position: absolute;
+        }
+        .banner-mb .swiper-pagination-bullet {
+          flex: 1;
+          height: 0.56rem;
+          background: none;
+          padding: 0;
+          margin: 0 !important;
+          opacity: 1;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          transition: background 0.2s;
+        }
+
+        .banner-mb .swiper-pagination-bullet svg path {
+          fill: #e4eaef;
+          transition: fill 0.2s;
+        }
+
+        .banner-mb .swiper-pagination-bullet-active svg path {
+          fill: #1550e5;
+        }
+
+        .banner-mb .pagination-svg-reverse {
+          transform: scaleY(-1);
+        }
+
+        .banner-image {
+          transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+          transform-origin: center;
+        }
+
+        .banner-image.fade-out {
+          opacity: 0;
+        }
+
+        .banner-image.fade-in {
+          opacity: 1;
+          transform: scale(1);
+        }
+
+        .change-button {
+          transition: all 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .change-button.changed {
+          transform: translate(2.5rem, 0);
+        }
+
+        .change-des {
+          transition: all 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .change-des.changed {
+          width: 9.23681rem;
+        }
+
+        .change-arrow {
+          transition: all 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .change-arrow.left {
+          transform: scale(0);
+          opacity: 0;
+        }
+
+        .change-arrow.right {
+          transform: scale(1);
+          opacity: 1;
+        }
+
+        .change-arrow.left.changed {
+          transform: scale(1);
+          opacity: 1;
+        }
+
+        .change-arrow.right.changed {
+          transform: scale(0);
+          opacity: 0;
+        }
+      `}</style>
       <Swiper
-        className='w-full h-[33rem]'
-        modules={[Pagination]}
-        pagination={{clickable: true}}
+        ref={swiperRef}
+        className='banner-mb w-full h-full banner-mb'
+        modules={[Pagination, EffectFade, Autoplay]}
+        pagination={{
+          clickable: true,
+          renderBullet: (index: number, className: string) => `
+      <span class="${className} ${
+            index % 2 === 1 ? 'pagination-svg-reverse' : ''
+          }">
+        <svg xmlns="http://www.w3.org/2000/svg" width="121" height="9" viewBox="0 0 121 9" fill="none">
+          <path d="M1.16561 4.73895C0.0303082 6.03128 0.947969 8.05893 2.66815 8.05893L118.203 8.05893C119.923 8.05893 120.84 6.03128 119.705 4.73895L116.332 0.898769C115.952 0.466526 115.404 0.21875 114.829 0.21875H6.04174C5.4664 0.21875 4.91892 0.466526 4.5392 0.898769L1.16561 4.73895Z" fill="#1550E5"/>
+        </svg>
+      </span>
+    `,
+        }}
+        effect='fade'
+        fadeEffect={{
+          crossFade: true,
+        }}
+        autoplay={{
+          delay: 5000,
+          disableOnInteraction: false,
+          pauseOnMouseEnter: true,
+        }}
+        allowTouchMove={true}
+        loop={true}
+        speed={1000}
       >
-        {bannerSlides?.map((item, index) => (
-          <SwiperSlide
-            className='bg-[#f7f7f7] relative block'
-            key={index}
-          >
-            <div className='flex items-center h-fit mt-[0.38rem] py-[0.41025rem] px-[1.1rem] relative'>
-              <Image
-                src='https://seohub.okhub-tech.com/wp-content/uploads/2025/04/home-box-icon1.webp'
-                alt='Icon 1'
-                width={18}
-                height={18}
-                className='w-[1.125rem] h-[1.125rem] mr-[0.26rem] transition-opacity duration-800 ease-in-out'
-                draggable={false}
-              />
-              <Image
-                src='https://seohub.okhub-tech.com/wp-content/uploads/2025/04/home-box-icon2.webp'
-                alt='Icon 2'
-                width={18}
-                height={18}
-                className='w-[1.125rem] h-[1.125rem] mr-[0.26rem] transition-opacity duration-800 ease-in-out absolute top-1/2 -translate-y-1/2 opacity-0'
-                draggable={false}
-              />
-              <span className='text-[0.875rem] font-medium text-[#1550e5] transition-opacity duration-800 ease-in-out'>
-                Mọi người cho rằng
-              </span>
-              <span className='text-[0.875rem] font-medium text-[#1550e5] transition-opacity duration-800 ease-in-out absolute top-1/2 -translate-y-1/2 left-[2.825rem] opacity-0'>
-                SEOhub cho rằng
-              </span>
-            </div>
+        {bannerSlides.map((item, index: number) => (
+          <SwiperSlide key={index}>
+            <p
+              className={`text-[1.25rem] leading-[1.75rem] text-black w-[18.75rem] pl-[1rem] mt-[0.625rem] transition-opacity duration-700 ${
+                showRightText ? 'opacity-0 absolute' : 'opacity-100'
+              }`}
+            >
+              {item.home_banner_des_l}
+            </p>
+            <p
+              className={`text-[1.25rem] leading-[1.25rem] text-black w-[18.75rem] pl-[1rem] mt-[0.625rem] transition-opacity duration-700 ${
+                showRightText ? 'opacity-100' : 'opacity-0 absolute'
+              }`}
+            >
+              {item.home_banner_des_r}
+            </p>
 
-            <div className='my-[0.4rem_0_0.62rem_0] w-full px-[1.1rem]'>
-              <div className='bg-[#e6e6e6] h-[0.0625rem] w-full'></div>
-            </div>
-
-            <div className='mt-[0.88rem] relative w-[18.75rem] pl-[1.1rem]'>
-              <div className='relative text-start w-full transition-[height] duration-800 ease-in-out'>
-                <span className='text-start w-full text-[#081d1a] text-[1.25rem] font-normal leading-[140%] transition-opacity duration-800 ease-in-out'>
-                  {item.home_banner_des_l}
-                </span>
-                <span className='text-start w-full text-[#081d1a] text-[1.25rem] font-normal leading-[140%] transition-opacity duration-800 ease-in-out absolute top-0 left-0 opacity-0'>
-                  {item.home_banner_des_r}
-                </span>
+            <div
+              onClick={handleToggleImage}
+              className='flex items-center ml-[1rem] mt-[0.625rem]'
+            >
+              <div
+                className={`size-[2.541rem] backdrop-blur-[2px] border-[1px] border-[#e6e6e6] bg-[rgba(255,255,255,0.39)] flex items-center justify-center rounded-[1.275rem] cursor-pointer transition-all duration-700 ease-in-out transform change-arrow left ${
+                  showAfter ? 'changed' : ''
+                }`}
+              >
+                <svg
+                  width='11'
+                  height='17'
+                  viewBox='0 0 11 17'
+                  fill='none'
+                  xmlns='http://www.w3.org/2000/svg'
+                >
+                  <rect
+                    opacity='0.4'
+                    x='10.8206'
+                    y='3.59906'
+                    width='10.9072'
+                    height='4.07425'
+                    rx='2.03713'
+                    transform='rotate(135 10.8206 3.59906)'
+                    fill='#1550E5'
+                  />
+                  <rect
+                    x='7.93976'
+                    y='16.2819'
+                    width='10.9072'
+                    height='4.07425'
+                    rx='2.03713'
+                    transform='rotate(-135 7.93976 16.2819)'
+                    fill='#1550E5'
+                  />
+                </svg>
               </div>
-
-              <div className='mt-[0.56rem] flex items-center relative z-10 transition-all duration-800 ease-in-out'>
-                <div className='w-[2.54188rem] h-[2.54188rem] rounded-full flex justify-center items-center transition-all duration-800 ease-in-out absolute -left-[2.54188rem] scale-0 border border-[#e6e6e6] bg-[rgba(255,255,255,0.39)] opacity-0 backdrop-blur-[2px]'>
-                  <div
-                    className='w-[0.66213rem] h-[0.97275rem] bg-contain bg-no-repeat'
-                    style={{
-                      backgroundImage:
-                        "url('https://seohub.okhub-tech.com/wp-content/uploads/2025/04/home-box-icon1.webp')",
-                    }}
-                  ></div>
-                </div>
-                <div className='w-[6.94181rem] h-[2.55238rem] rounded-[1.27619rem] overflow-hidden flex justify-center items-center transition-all duration-800 ease-in-out relative'>
-                  <div className='w-full h-full bg-[rgba(255,255,255,0.39)] backdrop-blur-[2px] absolute top-0 left-0 right-0 bottom-0 opacity-0 transition-all duration-800 ease-in-out'></div>
-                  <div className='w-full h-full bg-gradient-to-b from-[#001cb3] to-[#548beb] absolute top-0 left-0 right-0 bottom-0 opacity-100 transition-all duration-800 ease-in-out'></div>
-                  <span className='z-[1] transition-all duration-800 ease-in-out absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full leading-[134%] tracking-[0.0455rem] text-[0.90956rem] uppercase opacity-100 text-white font-bold'>
-                    Nhưng !
-                  </span>
-                  <span className='z-[1] transition-all duration-800 ease-in-out absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full leading-[134%] tracking-[0.0455rem] text-[0.90956rem] font-normal opacity-0 text-[#1550e5]'>
-                    Mọi người thấy
-                  </span>
-                </div>
-                <div className='w-[2.54188rem] h-[2.54188rem] rounded-full flex justify-center items-center transition-all duration-800 ease-in-out scale-100 bg-gradient-to-b from-[#001cb3] to-[#548beb] opacity-100'>
-                  <div
-                    className='w-[0.66213rem] h-[0.97275rem] bg-contain bg-no-repeat'
-                    style={{
-                      backgroundImage:
-                        "url('https://seohub.okhub-tech.com/wp-content/uploads/2025/04/home-box-icon2.webp')",
-                    }}
-                  ></div>
-                </div>
+              <button
+                className={cn(
+                  `h-[2.5rem] rounded-[1.275rem] border-[1px] border-[#e6e6e6] backdrop-blur-[2px] text-[0.925rem] transition-all duration-700 ease-in-out transform change-button change-des`,
+                  showAfter
+                    ? 'bg-[rgba(255,255,255,0.39)] text-[#1550E5] w-[9.25rem] changed'
+                    : 'bg-gradient-to-b from-[#001cb3] to-[#548beb] text-white font-bold w-[7rem]',
+                )}
+              >
+                {showAfter ? 'Mọi người thấy' : 'NHƯNG !!'}
+              </button>
+              <div
+                className={`size-[2.541rem] backdrop-blur-[2px] bg-gradient-to-b from-[#001cb3] to-[#548beb] flex items-center justify-center rounded-[1.275rem] cursor-pointer transition-all duration-700 ease-in-out transform change-arrow right ${
+                  showAfter ? '' : 'changed'
+                }`}
+              >
+                <svg
+                  width='11'
+                  height='17'
+                  viewBox='0 0 11 17'
+                  fill='none'
+                  xmlns='http://www.w3.org/2000/svg'
+                >
+                  <rect
+                    x='0.208923'
+                    y='13.4009'
+                    width='10.9072'
+                    height='4.07425'
+                    rx='2.03713'
+                    transform='rotate(-45 0.208923 13.4009)'
+                    fill='white'
+                    fillOpacity='0.62'
+                  />
+                  <rect
+                    x='3.08972'
+                    y='0.718109'
+                    width='10.9072'
+                    height='4.07425'
+                    rx='2.03713'
+                    transform='rotate(45 3.08972 0.718109)'
+                    fill='white'
+                  />
+                </svg>
               </div>
             </div>
 
-            <div className='relative'>
-              <Image
-                src={item.img_before.url}
-                alt='Before image'
-                width={1000}
-                height={1000}
-                className='absolute w-auto h-[15.75488rem] z-3 object-cover left-1/2 -translate-x-1/2 bottom-[0.84rem] transition-opacity duration-800 ease-in-out'
-                draggable={false}
-              />
-              <Image
-                src={item.img_after.url}
-                alt='After image'
-                width={1000}
-                height={1000}
-                className='absolute w-auto h-[15.75488rem] z-3 object-cover left-1/2 -translate-x-1/2 bottom-[0.84rem] transition-opacity duration-800 ease-in-out opacity-0'
-                draggable={false}
-              />
-              <Image
-                src='https://seohub.okhub-tech.com/wp-content/uploads/2025/04/bg-mark.png'
-                alt='Background mark'
-                width={1000}
-                height={1000}
-                className='absolute w-full h-[20.007rem] bottom-[5.7rem] z-1'
-                draggable={false}
-              />
-              <Image
-                src='https://seohub.okhub-tech.com/wp-content/uploads/2025/04/BannerSlide1.webp'
-                alt='Background'
-                width={1000}
-                height={1000}
-                className='absolute bottom-0 z-2 object-cover w-full h-[14.87519rem]'
-                draggable={false}
-              />
-              <div className='bg-white h-8 absolute bottom-0 w-full z-1'></div>
-            </div>
+            <Image
+              src={item.img_before.url}
+              alt={item.img_before.alt}
+              width={1000}
+              height={1000}
+              className={`object-cover absolute bottom-[4.8rem] left-[0.875rem] transition-opacity duration-700 ${
+                showAfter ? 'opacity-0' : 'opacity-100'
+              }`}
+            />
+
+            <Image
+              src={item.img_after.url}
+              alt={item.img_after.alt}
+              width={1000}
+              height={1000}
+              className={`object-cover absolute bottom-[4.8rem] left-[0.875rem] transition-opacity duration-700 ${
+                showAfter ? 'opacity-100' : 'opacity-0'
+              }`}
+            />
           </SwiperSlide>
         ))}
       </Swiper>
-    </div>
+      <Image
+        src={
+          'https://seohub.okhub-tech.com/wp-content/uploads/2025/04/bannermbbg.webp'
+        }
+        alt=''
+        width={1000}
+        height={1000}
+        className='object-cover absolute bottom-0 left-0'
+      />
+    </section>
   )
 }
 

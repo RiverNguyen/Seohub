@@ -106,7 +106,7 @@ export const Stars = () => {
       <Image
         src='https://seohub.okhub-tech.com/wp-content/uploads/2025/05/Vector-579.svg'
         alt='star-first'
-        className='object-cover absolute right-[13.5rem] top-[1.5rem]'
+        className='object-cover absolute right-[13.5rem] top-[1.5rem] xsm:w-[1.47rem] xsm:h-[1.835rem] xsm:right-[7.5rem] xsm:top-[1rem] xsm:[filter:brightness(0)_invert(1)]'
         width={44}
         height={55}
         ref={starFirstRef}
@@ -114,7 +114,7 @@ export const Stars = () => {
       <Image
         src='https://seohub.okhub-tech.com/wp-content/uploads/2025/05/Vector-580.svg'
         alt='star-second'
-        className='object-cover absolute right-[12rem] top-[3.5rem]'
+        className='object-cover absolute right-[12rem] top-[3.5rem] xsm:w-[1.08rem] xsm:h-[1.25rem] xsm:right-[6.5rem] xsm:top-[2.5rem] xsm:[filter:brightness(0)_invert(1)]'
         width={34}
         height={39}
         ref={starSecondRef}

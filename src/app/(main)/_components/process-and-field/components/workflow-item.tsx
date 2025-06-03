@@ -12,9 +12,9 @@ export const WorkflowItem = ({item, index}: WorkflowItemProps) => {
   const numberText = String(index + 1).padStart(2, '0')
 
   return (
-    <div className='item-snapping flex-shrink-0 flex flex-col justify-between overflow-hidden p-5 pl-[1.875rem] w-[34.25rem] h-[22.6875rem] border-l border-[#e6e8ea] bg-gradient-to-b from-[#548beb] to-[#0059f1]'>
+    <div className='item-snapping flex-shrink-0 flex flex-col justify-between overflow-hidden p-5 pl-[1.875rem] w-[34.25rem] h-[22.6875rem] border-l border-[#e6e8ea] bg-gradient-to-b from-[#548beb] to-[#0059f1] xsm:w-full xsm:h-[18.1875rem]'>
       <div className='item-snapping__warpper'>
-        <p className='w-[34.25rem] opacity-70 text-white text-base font-normal mb-2 uppercase'>
+        <p className='w-[34.25rem] opacity-70 text-white text-base font-normal mb-2 uppercase xsm:w-full xsm:text-[#E6E8EA]'>
           {numberText}. {item.title}
         </p>
         <Image
@@ -26,7 +26,7 @@ export const WorkflowItem = ({item, index}: WorkflowItemProps) => {
         />
       </div>
       <div
-        className='item-desc w-[25rem] text-white text-[1.25rem] leading-[1.5rem] font-normal'
+        className='item-desc w-[25rem] text-white text-[1.25rem] leading-[1.5rem] font-normal xsm:mb-body-16 xsm:w-full'
         dangerouslySetInnerHTML={{
           __html: item.description,
         }}

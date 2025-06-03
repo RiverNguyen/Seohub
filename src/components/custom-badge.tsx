@@ -7,6 +7,7 @@ type CustomBadgeProps = {
   align?: 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right'
   className?: string
   classText?: string
+  classPosition?: string
 }
 
 export const CustomBadge: React.FC<CustomBadgeProps> = ({
@@ -15,6 +16,7 @@ export const CustomBadge: React.FC<CustomBadgeProps> = ({
   align = 'top-left',
   className,
   classText,
+  classPosition,
 }) => {
   const positionClasses = {
     'top-left': 'top-0 left-0 -translate-x-full -translate-y-full',
@@ -37,6 +39,7 @@ export const CustomBadge: React.FC<CustomBadgeProps> = ({
           className={cn(
             'absolute w-[0.5355rem] h-[0.5355rem]',
             positionClasses[align],
+            classPosition,
           )}
           style={{backgroundColor: background}}
         />

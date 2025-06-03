@@ -19,83 +19,78 @@ const ValueToCustomer = ({
   const triggerEndSectionRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
-    if (typeof window === 'undefined') return
-    const vtcWrapperEl = document.querySelector(
-      '.vtc__wrapper',
-    ) as HTMLElement | null
-    const vtcHeaderEl = vtcWrapperEl?.querySelector(
-      '.vtc__header',
-    ) as HTMLElement | null
-    const vtcTitleEl = vtcHeaderEl?.querySelector(
-      '.vtc__title',
-    ) as HTMLElement | null
-    const vtcCardListEl = vtcWrapperEl?.querySelector(
-      '.vtc__card-list',
-    ) as HTMLElement | null
+    const vtcWrapperEl = vtcWrapperRef.current
+    const vtcHeaderEl = vtcHeaderRef.current
+    const vtcTitleEl = vtcTitleRef.current
+    const vtcCardListEl = vtcCardListRef.current
+    const triggerEndSectionEl = triggerEndSectionRef.current
 
     if (!vtcWrapperEl || !vtcHeaderEl || !vtcCardListEl) return
 
-    const isMobile = window.innerWidth < 640
-
-    // Giảm font size cho màn hình thấp nhỏ hơn
     if (window.innerHeight < 700 && window.innerWidth < 638) {
-      const vtcCardItems = document.querySelectorAll('.vtc__card-item')
-      vtcCardItems.forEach((item) => {
-        const titleContent = item.querySelector(
-          '.vtc__card-item__title-content',
-        ) as HTMLElement | null
-        const titleDesc = item.querySelector(
-          '.vtc__card-item__desc-wrapper',
-        ) as HTMLElement | null
-        if (titleContent) titleContent.style.fontSize = '1.05rem'
-        if (titleDesc) titleDesc.style.fontSize = '0.775rem'
+      const vtcCardItem = document.querySelectorAll('.vtc__card-item')
+      vtcCardItem.forEach((e) => {
+        const titleContent = e.querySelector(
+          '.vtc__wrapper .vtc__card-item__title-content',
+        ) as HTMLElement
+        const titleDesc = e.querySelector(
+          '.vtc__wrapper .vtc__card-item__desc-wrapper',
+        ) as HTMLElement
+        if (titleContent) {
+          titleContent.style.fontSize = '1.05rem'
+        }
+        if (titleDesc) {
+          titleDesc.style.fontSize = '0.775rem'
+        }
       })
     }
 
-    // Không dùng ScrollTrigger trên mobile
+    const isMobile = window.innerWidth < 640
+    // Không dùng ScrollTrigger Pin trên mobile
     if (isMobile) {
-      const triggerEndSectionEl = vtcWrapperEl.querySelector(
-        '.trigger-end-section',
-      )
-      if (triggerEndSectionEl && vtcTitleEl) {
-        const observer = new IntersectionObserver(
-          (entries) => {
-            entries.forEach((entry) => {
-              const onTopViewPort = entry.isIntersecting
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            const onTopViewPort = entry.isIntersecting
+            if (vtcTitleEl) {
               vtcTitleEl.style.opacity = onTopViewPort ? '0' : '1'
-            })
-          },
-          {threshold: 0.5},
-        )
+            }
+          })
+        },
+        {
+          threshold: 0.5,
+        },
+      )
+      if (triggerEndSectionEl) {
         observer.observe(triggerEndSectionEl)
       }
       return
     }
 
-    // ScrollTrigger cho header
-    const lastVtcCardItemEl = vtcCardListEl.querySelector(
-      '.vtc__card-item:last-child',
-    )
-    if (lastVtcCardItemEl) {
+    const handleScrollTriggerPinVtcHeaderEl = () => {
+      const lastVtcCardItemEl = vtcCardListEl?.querySelector(
+        '.vtc__card-item:last-child',
+      )
+      if (!lastVtcCardItemEl) return
+      const offsetTop = isMobile ? 0 : 7.5
       ScrollTrigger.create({
         trigger: vtcHeaderEl,
         endTrigger: lastVtcCardItemEl,
         pin: true,
-        start: `top 7.5%`,
-        end: `top 7.5%`,
+        start: `top ${offsetTop}%`,
+        end: `top ${offsetTop}%`,
         pinSpacing: false,
         scrub: true,
-        markers: false,
       })
     }
 
-    // ScrollTrigger cho từng card item
-    const items = vtcCardListEl.querySelectorAll('.vtc__card-item')
-    const lastItem = vtcCardListEl.querySelector('.vtc__card-item:last-child')
-    if (items.length && lastItem) {
-      const defaultOffsetTop = 30
-      const spaceOffsetTop = 12.875
+    const handleScrollTriggerPinVtcCardItemEl = () => {
+      const items = vtcCardListEl.querySelectorAll('.vtc__card-item')
+      const lastItem = vtcCardListEl.querySelector('.vtc__card-item:last-child')
+      if (!items || !items.length) return
 
+      const defaultOffsetTop = isMobile ? 10 : 30 // Tính theo phần trăm 30 = 30%
+      const spaceOffsetTop = isMobile ? 10 : 12.875
       items.forEach((item, index) => {
         const offsetTop = defaultOffsetTop + spaceOffsetTop * index
         const offsetTopEnd =
@@ -109,16 +104,18 @@ const ValueToCustomer = ({
           pinSpacing: false,
           scrub: true,
           anticipatePin: 1,
-          // markers: true,
         })
       })
     }
 
-    // Cleanup nếu cần sau này
+    handleScrollTriggerPinVtcHeaderEl()
+    handleScrollTriggerPinVtcCardItemEl()
+
+    // Cleanup function
     return () => {
       ScrollTrigger.getAll().forEach((trigger) => trigger.kill())
     }
-  }, [])
+  }, []) // Empty dependency array since we only want to run this once on mount
 
   return (
     <section
@@ -128,18 +125,18 @@ const ValueToCustomer = ({
     >
       <div className='max-w-[93.5625rem] mx-auto py-[3.13rem_0_5rem]'>
         <div
-          className='flex justify-between items-end w-full h-[10.25rem] px-0 vtc__header'
+          className='flex justify-between xsm:justify-start items-end w-full h-[10.25rem] px-0 vtc__header xsm:flex-col xsm:items-center xsm:pt-[2rem]  xsm:sticky xsm:top-[-1rem]'
           ref={vtcHeaderRef}
         >
           <h2
             dangerouslySetInnerHTML={{__html: valueToCustomer?.title ?? ''}}
-            className='text-white text-[2.875rem] leading-[4rem] font-normal text-left vtc__title'
+            className='text-white text-[2.875rem] leading-[4rem] font-normal text-left vtc__title xsm:text-center xsm:mb-title-h3'
             ref={vtcTitleRef}
           ></h2>
           {valueToCustomer.contact && valueToCustomer.contact.url && (
             <a
               href={valueToCustomer.contact.url}
-              className='relative cursor-pointer no-underline'
+              className='relative cursor-pointer no-underline block xsm:hidden'
             >
               <CustomBorderedButton color='#00D3D0'>
                 {valueToCustomer.contact.title ?? ''}
@@ -149,13 +146,13 @@ const ValueToCustomer = ({
         </div>
 
         <div
-          className='relative mt-[11.24rem] flex flex-col pointer-events-none vtc__card-list'
+          className='relative mt-[11.24rem] xsm:px-[1.25rem] xsm:mt-[-2rem] flex flex-col pointer-events-none vtc__card-list'
           ref={vtcCardListRef}
         >
           {valueToCustomer.value_1 && (
-            <div className='relative flex-shrink-0 mb-[4.18rem] vtc__card-item'>
-              <article className='relative p-[1.87163rem_6.375rem_1.87163rem_1.875rem] min-h-[20.07rem] flex items-start rounded-[0.875rem] bg-white shadow-[0px_-59.892px_74.865px_0px_rgba(3,33,7,0.04)] overflow-hidden'>
-                <div className='flex-shrink-0 mr-[20.5625rem] inline-flex w-[3.05969rem] h-[3.05969rem] justify-center items-center rounded-[0.6875rem] bg-[#fe7301] shadow-[0px_4px_15.2px_0px_rgba(255,115,0,0.25)] text-white text-[1.2225rem] font-bold leading-[150%]'>
+            <div className='relative flex-shrink-0 mb-[4.18rem] vtc__card-item xsm:sticky xsm:top-[6.25rem] xsm:shrink-0'>
+              <article className='relative p-[1.87163rem_6.375rem_1.87163rem_1.875rem] xsm:p-0 min-h-[20.07rem] xsm:min-h-[38.3125rem]  flex items-start rounded-[0.875rem] bg-white shadow-[0px_-59.892px_74.865px_0px_rgba(3,33,7,0.04)] overflow-hidden xsm:px-[1.5475rem] xsm:pt-[1.475rem]'>
+                <div className='flex-shrink-0 mr-[20.5625rem] inline-flex w-[3.05969rem] h-[3.05969rem] justify-center items-center rounded-[0.6875rem] bg-[#fe7301] shadow-[0px_4px_15.2px_0px_rgba(255,115,0,0.25)] text-white text-[1.2225rem] font-bold leading-[150%] xsm:hidden'>
                   01
                 </div>
                 <div className='relative w-[33.1875rem]'>
@@ -173,15 +170,15 @@ const ValueToCustomer = ({
                       dangerouslySetInnerHTML={{
                         __html: valueToCustomer.value_1.title ?? '',
                       }}
-                      className='flex-1 text-[#081d1a] text-[1.75rem] font-normal leading-[139%] tracking-[-0.0175rem] vtc__card-item__title-content'
+                      className='flex-1 text-[#081d1a] text-[1.75rem] font-normal leading-[139%] tracking-[-0.0175rem] vtc__card-item__title-content xsm:mb-title-h5'
                     ></h3>
                   </div>
-                  <div className='my-[1.6375rem] w-full h-[0.0585rem] rounded-[0.0585rem] bg-gradient-to-r from-[rgba(112,115,124,0.22)] from-[24.3%] to-[rgba(112,115,124,0)] to-[82.57%]'></div>
+                  <div className='my-[1.6375rem] xsm:my-[1rem] w-full h-[0.0585rem] rounded-[0.0585rem] bg-gradient-to-r from-[rgba(112,115,124,0.22)] from-[24.3%] to-[rgba(112,115,124,0)] to-[82.57%]'></div>
                   <div
                     dangerouslySetInnerHTML={{
                       __html: valueToCustomer.value_1.description ?? '',
                     }}
-                    className='text-[#666d80] text-[0.875rem] font-normal leading-[150%] vtc__card-item__desc-wrapper'
+                    className='text-[#666d80] text-[0.875rem] font-normal leading-[150%] vtc__card-item__desc-wrapper xsm:mb-body-14'
                   ></div>
                 </div>
                 <div className='block xsm:hidden absolute bottom-0 right-0 w-[57.66rem] h-[12.91rem]'>
@@ -193,7 +190,7 @@ const ValueToCustomer = ({
                     height={1000}
                   />
                 </div>
-                <div className='hidden xsm:block w-[63.19756rem] h-[15.886rem]'>
+                <div className='hidden absolute bottom-[-0.5rem] right-0 xsm:block w-[21.19756rem] h-[16.886rem]'>
                   <Image
                     src='/images/UnionMb.svg'
                     alt=''
@@ -202,15 +199,15 @@ const ValueToCustomer = ({
                     height={1000}
                   />
                 </div>
-                <div className='flex items-end absolute w-[27.99125rem] h-[19.90981rem] right-0 bottom-[-0.1175rem]'>
+                <div className='flex items-end absolute w-[27.99125rem] h-[19.90981rem] right-0 bottom-[-0.1175rem] xsm:w-[20.325rem] xsm:h-[14.325rem]'>
                   <Image
                     src='/images/frameVtc1.svg'
                     alt=''
-                    className='w-[27.325rem] h-[19.325rem] object-cover'
+                    className='w-[27.325rem] h-[19.325rem] object-cover xsm:w-[20.325rem] xsm:h-[14.325rem]'
                     width={1000}
                     height={1000}
                   />
-                  <div className='absolute top-0 bottom-0 left-[4.83rem] w-[16.89238rem] h-[19.893rem] z-[5]'>
+                  <div className='absolute bottom-0 left-[4.83rem] w-[16.89238rem] h-[19.893rem] z-[5] xsm:w-[12.635rem] xsm:h-[14.875rem] xsm:left-1/2 xsm:bottom-0 xsm:-translate-x-1/2'>
                     {valueToCustomer.value_1.thumbnail && (
                       <Image
                         src={valueToCustomer.value_1.thumbnail.url}
@@ -267,7 +264,7 @@ const ValueToCustomer = ({
                       />
                     </svg>
                   </div>
-                  <div className='absolute bottom-[0.875rem] right-[3.5rem] z-10'>
+                  <div className='absolute bottom-[0.875rem] right-[3.5rem] z-10 xsm:bottom-[0.5rem] xsm:right-[0.5rem]'>
                     {valueToCustomer.value_1.tag && (
                       <CustomBadge background='#FF7300'>
                         {valueToCustomer.value_1.tag}
@@ -280,9 +277,9 @@ const ValueToCustomer = ({
           )}
 
           {valueToCustomer.value_2 && (
-            <div className='relative flex-shrink-0 mb-[4.18rem] vtc__card-item'>
-              <article className='relative p-[1.87163rem_6.375rem_1.87163rem_1.875rem] min-h-[20.07rem] flex items-start rounded-[0.875rem] bg-white shadow-[0px_-59.892px_74.865px_0px_rgba(3,33,7,0.04)] overflow-hidden'>
-                <div className='flex-shrink-0 mr-[20.5625rem] inline-flex w-[3.05969rem] h-[3.05969rem] justify-center items-center rounded-[0.6875rem] bg-[#fe7301] shadow-[0px_4px_15.2px_0px_rgba(255,115,0,0.25)] text-white text-[1.2225rem] font-bold leading-[150%]'>
+            <div className='relative flex-shrink-0 mb-[4.18rem] vtc__card-item xsm:sticky xsm:top-[6.25rem] xsm:shrink-0 xsm:pt-[3.3875rem]'>
+              <article className='relative p-[1.87163rem_6.375rem_1.87163rem_1.875rem] xsm:p-0 min-h-[20.07rem] xsm:min-h-[38.3125rem]  flex items-start rounded-[0.875rem] bg-white shadow-[0px_-59.892px_74.865px_0px_rgba(3,33,7,0.04)] overflow-hidden xsm:px-[1.5475rem] xsm:pt-[1.475rem]'>
+                <div className='flex-shrink-0 mr-[20.5625rem] inline-flex w-[3.05969rem] h-[3.05969rem] justify-center items-center rounded-[0.6875rem] bg-[#fe7301] shadow-[0px_4px_15.2px_0px_rgba(255,115,0,0.25)] text-white text-[1.2225rem] font-bold leading-[150%] xsm:hidden'>
                   02
                 </div>
                 <div className='relative w-[33.1875rem]'>
@@ -300,15 +297,15 @@ const ValueToCustomer = ({
                       dangerouslySetInnerHTML={{
                         __html: valueToCustomer.value_2.title ?? '',
                       }}
-                      className='flex-1 text-[#081d1a] text-[1.75rem] font-normal leading-[139%] tracking-[-0.0175rem]'
+                      className='flex-1 text-[#081d1a] text-[1.75rem] font-normal leading-[139%] tracking-[-0.0175rem] vtc__card-item__title-content xsm:mb-title-h5'
                     ></h3>
                   </div>
-                  <div className='my-[1.6375rem] w-full h-[0.0585rem] rounded-[0.0585rem] bg-gradient-to-r from-[rgba(112,115,124,0.22)] from-[24.3%] to-[rgba(112,115,124,0)] to-[82.57%]'></div>
+                  <div className='my-[1.6375rem] xsm:my-[1rem] w-full h-[0.0585rem] rounded-[0.0585rem] bg-gradient-to-r from-[rgba(112,115,124,0.22)] from-[24.3%] to-[rgba(112,115,124,0)] to-[82.57%]'></div>
                   <div
                     dangerouslySetInnerHTML={{
                       __html: valueToCustomer.value_2.description ?? '',
                     }}
-                    className='text-[#666d80] text-[0.875rem] font-normal leading-[150%]'
+                    className='text-[#666d80] text-[0.875rem] font-normal leading-[150%] xsm:mb-body-14'
                   ></div>
                 </div>
                 <div className='block xsm:hidden absolute bottom-0 right-0 w-[57.66rem] h-[12.91rem]'>
@@ -320,7 +317,7 @@ const ValueToCustomer = ({
                     height={1000}
                   />
                 </div>
-                <div className='hidden xsm:block w-[63.19756rem] h-[15.886rem]'>
+                <div className='hidden absolute bottom-[-0.5rem] right-0 xsm:block w-[21.19756rem] h-[16.886rem]'>
                   <Image
                     src='/images/UnionMb.svg'
                     alt=''
@@ -329,15 +326,15 @@ const ValueToCustomer = ({
                     height={1000}
                   />
                 </div>
-                <div className='flex items-end absolute w-[27.99125rem] h-[19.90981rem] right-0 -bottom-[0.1175rem]'>
+                <div className='flex items-end absolute w-[27.99125rem] h-[19.90981rem] right-0 bottom-[-0.1175rem] xsm:w-[20.325rem] xsm:h-[14.325rem]'>
                   <Image
                     src='/images/frameVtc2.svg'
                     alt=''
-                    className='w-[29.625rem] h-[19.725rem] object-cover'
+                    className='w-[27.325rem] h-[19.325rem] object-cover xsm:w-[20.325rem] xsm:h-[14.325rem]'
                     width={1000}
                     height={1000}
                   />
-                  <div className='absolute w-[16.44963rem] h-[19.21781rem] -bottom-[0.25rem] left-1/2 -translate-x-1/2'>
+                  <div className='absolute bottom-0 left-[4.83rem] w-[16.89238rem] h-[19.893rem] z-[5] xsm:w-[12.635rem] xsm:h-[14.875rem] xsm:left-1/2 xsm:bottom-0 xsm:-translate-x-1/2'>
                     {valueToCustomer.value_2.thumbnail && (
                       <Image
                         src={valueToCustomer.value_2.thumbnail.url}
@@ -393,7 +390,7 @@ const ValueToCustomer = ({
                       />
                     </svg>
                   </div>
-                  <div className='absolute bottom-[0.875rem] right-[3.5rem] z-10'>
+                  <div className='absolute bottom-[0.875rem] right-[3.5rem] z-10 xsm:bottom-[0.5rem] xsm:right-[0.5rem]'>
                     {valueToCustomer.value_2.tag && (
                       <CustomBadge background='#1650E5'>
                         {valueToCustomer.value_2.tag}
@@ -406,9 +403,9 @@ const ValueToCustomer = ({
           )}
 
           {valueToCustomer.value_3 && (
-            <div className='relative flex-shrink-0 mb-[4.18rem] vtc__card-item'>
-              <article className='relative p-[1.87163rem_6.375rem_1.87163rem_1.875rem] min-h-[20.07rem] flex items-start rounded-[0.875rem] bg-white shadow-[0px_-59.892px_74.865px_0px_rgba(3,33,7,0.04)] overflow-hidden'>
-                <div className='flex-shrink-0 mr-[20.5625rem] inline-flex w-[3.05969rem] h-[3.05969rem] justify-center items-center rounded-[0.6875rem] bg-[#fe7301] shadow-[0px_4px_15.2px_0px_rgba(255,115,0,0.25)] text-white text-[1.2225rem] font-bold leading-[150%]'>
+            <div className='relative flex-shrink-0 mb-[4.18rem] vtc__card-item xsm:sticky xsm:top-[6.25rem] xsm:shrink-0 xsm:pt-[3.3875rem]'>
+              <article className='relative p-[1.87163rem_6.375rem_1.87163rem_1.875rem] xsm:p-0 min-h-[20.07rem] xsm:min-h-[38.3125rem]  flex items-start rounded-[0.875rem] bg-white shadow-[0px_-59.892px_74.865px_0px_rgba(3,33,7,0.04)] overflow-hidden xsm:px-[1.5475rem] xsm:pt-[1.475rem]'>
+                <div className='flex-shrink-0 mr-[20.5625rem] inline-flex w-[3.05969rem] h-[3.05969rem] justify-center items-center rounded-[0.6875rem] bg-[#fe7301] shadow-[0px_4px_15.2px_0px_rgba(255,115,0,0.25)] text-white text-[1.2225rem] font-bold leading-[150%] xsm:hidden'>
                   03
                 </div>
                 <div className='relative w-[33.1875rem]'>
@@ -426,15 +423,15 @@ const ValueToCustomer = ({
                       dangerouslySetInnerHTML={{
                         __html: valueToCustomer.value_3.title ?? '',
                       }}
-                      className='flex-1 text-[#081d1a] text-[1.75rem] font-normal leading-[139%] tracking-[-0.0175rem]'
+                      className='flex-1 text-[#081d1a] text-[1.75rem] font-normal leading-[139%] tracking-[-0.0175rem] xsm:mb-title-h5'
                     ></h3>
                   </div>
-                  <div className='my-[1.6375rem] w-full h-[0.0585rem] rounded-[0.0585rem] bg-gradient-to-r from-[rgba(112,115,124,0.22)] from-[24.3%] to-[rgba(112,115,124,0)] to-[82.57%]'></div>
+                  <div className='my-[1.6375rem] xsm:my-[1rem] w-full h-[0.0585rem] rounded-[0.0585rem] bg-gradient-to-r from-[rgba(112,115,124,0.22)] from-[24.3%] to-[rgba(112,115,124,0)] to-[82.57%]'></div>
                   <div
                     dangerouslySetInnerHTML={{
                       __html: valueToCustomer.value_3.description ?? '',
                     }}
-                    className='text-[#666d80] text-[0.875rem] font-normal leading-[150%]'
+                    className='text-[#666d80] text-[0.875rem] font-normal leading-[150%] xsm:mb-body-14'
                   ></div>
                 </div>
                 <div className='block xsm:hidden absolute bottom-0 right-0 w-[57.66rem] h-[12.91rem]'>
@@ -446,7 +443,7 @@ const ValueToCustomer = ({
                     height={1000}
                   />
                 </div>
-                <div className='hidden xsm:block w-[63.19756rem] h-[15.886rem]'>
+                <div className='hidden absolute bottom-[-0.5rem] right-0 xsm:block w-[21.19756rem] h-[16.886rem]'>
                   <Image
                     src='/images/UnionMb.svg'
                     alt=''
@@ -455,15 +452,15 @@ const ValueToCustomer = ({
                     height={1000}
                   />
                 </div>
-                <div className='flex items-end absolute w-[27.99125rem] h-[19.90981rem] right-0 bottom-[-0.1175rem]'>
+                <div className='flex items-end absolute w-[27.99125rem] h-[19.90981rem] right-0 bottom-[-0.1175rem] xsm:w-[20.325rem] xsm:h-[14.325rem]'>
                   <Image
-                    className='absolute right-[-0.6rem] bottom-[-3.1rem]'
+                    className='absolute right-[-0.6rem] bottom-[-3.1rem] xsm:w-[22.325rem] xsm:h-[16.325rem]'
                     src='/images/frameVtc3.svg'
                     alt=''
                     width={1000}
                     height={1000}
                   />
-                  <div className='absolute w-[16.44963rem] h-[19.21781rem] bottom-0 left-[5.03rem]'>
+                  <div className='absolute bottom-0 left-[4.83rem] w-[16.89238rem] h-[19.893rem] z-[5] xsm:w-[12.635rem] xsm:h-[14.875rem] xsm:left-1/2 xsm:bottom-0 xsm:-translate-x-1/2'>
                     {valueToCustomer.value_3.thumbnail && (
                       <Image
                         src={valueToCustomer.value_3.thumbnail.url}
@@ -489,7 +486,7 @@ const ValueToCustomer = ({
                       />
                     </svg>
                   </div>
-                  <div className='absolute bottom-[4.5625rem] left-[16.875rem] w-[6.45013rem] z-10'>
+                  <div className='absolute bottom-[4.5625rem] left-[16.875rem] w-[6.45013rem] z-10 xsm:bottom-[3rem] xsm:left-[12.875rem]'>
                     <Image
                       src='/images/rectangle-vtc-3_1.svg'
                       alt=''
@@ -498,7 +495,7 @@ const ValueToCustomer = ({
                       height={1000}
                     />
                   </div>
-                  <div className='absolute bottom-[0.875rem] right-[3.5rem] z-10'>
+                  <div className='absolute bottom-[0.875rem] right-[3.5rem] z-10 xsm:bottom-[0.5rem] xsm:right-[0.5rem]'>
                     {valueToCustomer.value_3.tag && (
                       <CustomBadge background='#00D3D0'>
                         {valueToCustomer.value_3.tag}
