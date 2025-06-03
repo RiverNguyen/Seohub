@@ -1,5 +1,5 @@
-import Image from 'next/image'
 import type {Footer, SocialList} from '@/types/footer.interface'
+import Image from 'next/image'
 import Link from 'next/link'
 
 interface FooterLogoProps {
@@ -12,7 +12,7 @@ const FooterLogo = ({footer, globalSocial}: FooterLogoProps) => {
     <div className='flex flex-col justify-between relative z-30'>
       <div className='flex flex-col xsm:flex-row xsm:items-center xsm:justify-between xsm:px-[0.625rem] xsm:py-[1.5rem] xsm:bg-[#F5F7F9] xsm:border-t xsm:border-b'>
         <Link
-          href='#'
+          href='/'
           className='mt-14 xsm:mt-0'
         >
           <Image

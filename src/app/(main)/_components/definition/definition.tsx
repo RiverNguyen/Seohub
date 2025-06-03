@@ -10,7 +10,7 @@ const Definition = ({definition}: {definition: Definition}) => {
   return (
     <>
       <DefinitionClient />
-      <DefinitionMarquee definition_partner={definition.definition_partner} />
+      <DefinitionMarquee definition_partner={definition?.definition_partner} />
 
       <section className='h-[50.625rem] xsm:h-auto relative mt-[1rem] overflow-hidden'>
         <DefinitionBackground />

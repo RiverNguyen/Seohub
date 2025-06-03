@@ -1,6 +1,6 @@
-import Link from 'next/link'
-import {Workflow} from '@/types/workflow.interface'
 import CustomBorderedButton from '@/components/bordered-button'
+import {Workflow} from '@/types/workflow.interface'
+import Link from 'next/link'
 
 interface WorkflowLastItemProps {
   workflow: Workflow
@@ -10,7 +10,7 @@ export const WorkflowLastItem = ({workflow}: WorkflowLastItemProps) => {
   return (
     <div
       data-speed='1'
-      className='item-snapping w-full relative flex flex-row justify-start bg-gradient-to-b from-[#548beb] to-[#0059f1] p-5 pl-[1.875rem] h-[22.6875rem] border-l border-[#e6e8ea]'
+      className='item-snapping last-item w-full relative flex flex-row justify-start bg-gradient-to-b from-[#548beb] to-[#0059f1] p-5 pl-[1.875rem] h-[22.6875rem] sm:border-l sm:border-[#e6e8ea]'
     >
       <div className='flex flex-col justify-between h-full xsm:justify-start'>
         <div
