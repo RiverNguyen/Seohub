@@ -65,17 +65,17 @@ const ListenToCustomer = ({
         </div>
       </div>
 
-      <div className='absolute z-[10] w-[37.375rem] h-[39.375rem] bottom-0 right-[6rem] md:block xsm:w-[21.975rem] xsm:h-[23.125rem] xsm:bottom-[0rem] xsm:right-[0rem]'>
+      <div className='absolute z-[20] w-[37.375rem] h-[39.375rem] bottom-0 right-[6rem] md:block xsm:w-[21.975rem] xsm:h-[23.125rem] xsm:bottom-[0rem] xsm:right-[0rem]'>
         <Stars />
         <Swiper
           direction='horizontal'
           loop={true}
           speed={500}
           allowTouchMove={false}
-          autoplay={{
-            delay: 4000,
-            disableOnInteraction: false,
-          }}
+          // autoplay={{
+          //   delay: 4000,
+          //   disableOnInteraction: false,
+          // }}
           effect='fade'
           fadeEffect={{
             crossFade: true,
