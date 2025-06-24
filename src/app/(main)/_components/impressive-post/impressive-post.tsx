@@ -1,6 +1,5 @@
 'use client'
 
-import CustomBorderedButton from '@/components/bordered-button'
 import fetchData from '@/fetches/fetchData'
 import {Category} from '@/types/category.interface'
 import type {ImpressivePost, Post} from '@/types/post.interface'
@@ -8,51 +7,30 @@ import {useEffect, useState} from 'react'
 import 'swiper/css'
 import 'swiper/css/navigation'
 import 'swiper/css/pagination'
-import {Navigation} from 'swiper/modules'
-import {Swiper, SwiperSlide} from 'swiper/react'
 import CategoryTabs from './components/category-tabs'
-import FeaturedPost from './components/featured-post'
 import ImpressivePostHeader from './components/impressive-post-header'
-import PostGrid from './components/post-grid'
+import PostList from '@/app/(main)/_components/impressive-post/components/post-list'
 
 const ImpressivePost = ({
   impressivePost,
   categoriesData,
-  datafilteredPosts,
+  dataFilteredPosts,
 }: {
   impressivePost: ImpressivePost
   categoriesData: Category[]
-  datafilteredPosts: Post[]
+  dataFilteredPosts: Post[]
 }) => {
   const [selectedCategory, setSelectedCategory] = useState('all')
-  const [filteredPosts, setFilteredPosts] = useState<Post[]>([])
+  const [postList, setPostList] = useState<Post[]>([])
   const [categories, setCategories] = useState<Category[]>([])
+  const [isLoading, setIsLoading] = useState(false)
 
-  const [isLoadingPosts, setIsLoadingPosts] = useState(false)
-
-  // useEffect(() => {
-  //   const fetchInitialData = async () => {
-  //     try {
-  //       const categoriesData = await fetchData({
-  //         api: '/v2/categories',
-  //         method: 'GET',
-  //       })
-
-  //       setCategories(categoriesData)
-  //       await fetchPostsByCategory('all')
-  //     } finally {
-  //       setIsLoading(false)
-  //     }
-  //   }
-
-  //   fetchInitialData()
-  // }, [])
   useEffect(() => {
     setCategories(categoriesData)
-    setFilteredPosts(datafilteredPosts)
-  }, [categoriesData, datafilteredPosts])
+    setPostList(dataFilteredPosts)
+  }, [categoriesData, dataFilteredPosts])
   const fetchPostsByCategory = async (categorySlug: string) => {
-    setIsLoadingPosts(true)
+    setIsLoading(true)
     try {
       const apiUrl =
         categorySlug === 'all'
@@ -63,9 +41,9 @@ const ImpressivePost = ({
         api: apiUrl,
         method: 'GET',
       })
-      setFilteredPosts(posts)
+      setPostList(posts)
     } finally {
-      setIsLoadingPosts(false)
+      setIsLoading(false)
     }
   }
 
@@ -76,28 +54,33 @@ const ImpressivePost = ({
   return (
     <section
       id='impressive-post'
-      className='relative w-full bg-white py-[4.25rem] z-[11]'
+      className='relative z-[11] w-full bg-white py-[4.25rem]'
     >
-      <div className='w-[93.375rem] mx-auto xsm:w-full'>
+      <div className='xsm:w-full mx-auto w-[93.375rem]'>
         <ImpressivePostHeader impressivePost={impressivePost} />
         <CategoryTabs
           categories={categories}
           selectedCategory={selectedCategory}
           onCategoryClick={handleCategoryClick}
         />
-        <div className='flex justify-between w-full xsm:px-[0.75rem]'>
+        <PostList
+          isLoading={isLoading}
+          postList={postList}
+          linkMore={impressivePost.discovery_post}
+        />
+        {/* <div className='xsm:px-[0.75rem] flex w-full justify-between'>
           <FeaturedPost
-            post={filteredPosts[0]}
-            isLoading={isLoadingPosts}
+            post={postList[0]}
+            isLoading={isLoading}
           />
-          <div className='grid grid-cols-2 gap-[0.8125rem] flex-shrink-0 w-[45.5625rem] xsm:hidden'>
+          <div className='xsm:hidden grid w-[45.5625rem] flex-shrink-0 grid-cols-2 gap-[0.8125rem]'>
             <PostGrid
-              posts={filteredPosts.slice(1, 5)}
-              isLoading={isLoadingPosts}
+              posts={postList.slice(1, 5)}
+              isLoading={isLoading}
             />
           </div>
         </div>
-        <div className='hidden xsm:block'>
+        <div className='xsm:block hidden'>
           <style
             jsx
             global
@@ -159,18 +142,18 @@ const ImpressivePost = ({
               prevEl: '.swiper-button-prev',
             }}
             pagination={{clickable: true}}
-            className='w-full mt-[0.7rem] xsm:mx-[0.75rem] blog-swiper'
+            className='xsm:mx-[0.75rem] blog-swiper mt-[0.7rem] w-full'
           >
-            {filteredPosts.slice(1).map((post, index) => (
+            {postList.slice(1).map((post, index) => (
               <SwiperSlide key={index}>
                 <PostGrid
                   posts={[post]}
-                  isLoading={isLoadingPosts}
+                  isLoading={isLoading}
                 />
               </SwiperSlide>
             ))}
           </Swiper>
-          <div className='flex justify-between items-center'>
+          <div className='flex items-center justify-between'>
             <div className=''>
               <div className='swiper-button-prev'>
                 <svg
@@ -201,16 +184,20 @@ const ImpressivePost = ({
                 </svg>
               </div>
             </div>
-            <div className='hidden xsm:block absolute right-[0.75rem] bottom-[1.25rem]'>
-              <CustomBorderedButton
-                borderColor='#1550E5'
+            <div className='xsm:block absolute right-[0.75rem] bottom-[1.25rem] hidden'>
+              <CustomBorderedButtonV2
+                // borderColor='#1550E5'
+                // color='#1550E5'
+                // borderLine='#1550E5'
                 color='#1550E5'
+                borderColor='#1550E5'
+                borderLine='rgba(21, 80, 229, 0.10)'
               >
                 Khám phá Blog
-              </CustomBorderedButton>
+              </CustomBorderedButtonV2>
             </div>
           </div>
-        </div>
+        </div> */}
       </div>
     </section>
   )

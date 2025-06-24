@@ -37,7 +37,7 @@ export default async function Page() {
         commitment={data?.acf?.commitment}
       />
       <ImpressivePost
-        datafilteredPosts={filteredPosts}
+        dataFilteredPosts={filteredPosts}
         categoriesData={categoriesData}
         impressivePost={data?.acf?.impressive_post}
       />
