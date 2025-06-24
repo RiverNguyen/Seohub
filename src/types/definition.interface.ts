@@ -7,8 +7,8 @@ export interface Definition {
   definition_img_company: IMedia
   definition_content: string
   definition_tag: {
-    definition_tag_content: string
-    definition_tag_emp: string
     value: string
+    unit: string
+    title: string
   }[]
 }

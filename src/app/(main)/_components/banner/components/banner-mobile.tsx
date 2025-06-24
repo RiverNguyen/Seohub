@@ -162,8 +162,8 @@ const BannerMobile = ({bannerSlides}: BannerMobileProps) => {
             alt=''
             width={35.0315}
             height={17.5611}
-            src='/banner/okhub-icon-v3.svg'
-            className='h-auto w-[2.18944rem] shrink-0'
+            src='/banner/seohub-icon-v3.svg'
+            className='h-auto w-[1.181rem] shrink-0'
           />
           <span className='text-[0.875rem] font-medium text-[#1550E5]'>
             SEOhub cho rằng

@@ -314,3 +314,25 @@ input[type='number'] {
     color: white;
   }
 }
+
+@utility text-linear-deep-blue {
+  background: linear-gradient(180deg, #001cb3 0%, #548beb 88.7%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+@utility text-linear-deep-blue-hover {
+  -webkit-text-fill-color: white;
+}
+@utility text-linear-orange {
+  background: linear-gradient(180deg, #ff7300 0%, #fff 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  -webkit-text-stroke-width: 1.39px;
+  -webkit-text-stroke-color: #fff;
+}
+@utility text-linear-orange-hover {
+  -webkit-text-fill-color: white;
+  -webkit-text-stroke-width: 0px;
+}

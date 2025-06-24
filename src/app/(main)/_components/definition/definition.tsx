@@ -1,42 +1,47 @@
 import DefinitionMarquee from '@/app/(main)/_components/definition/components/definition-marquee'
-import type {Definition} from '@/types/definition.interface'
 import DefinitionArticle from './components/definition-article'
 import DefinitionBackground from './components/definition-background'
-import DefinitionCard from './components/definition-card'
-import DefinitionClient from './components/definition-client'
 import DefinitionCompany from './components/definition-company'
+import DefinitionCard from '@/app/(main)/_components/definition/components/definition-card'
+import type {Definition} from '@/types/definition.interface'
 
 const Definition = ({definition}: {definition: Definition}) => {
+  const {
+    definition_title,
+    definition_content,
+    definition_img_company,
+    definition_partner,
+    definition_tag,
+  } = definition
   return (
     <>
-      <DefinitionClient />
-      <DefinitionMarquee definition_partner={definition?.definition_partner} />
+      <DefinitionMarquee definition_partner={definition_partner} />
 
-      <section className='h-[50.625rem] xsm:h-auto relative mt-[1rem] overflow-hidden'>
+      <section className='xsm:h-auto relative mt-[1rem] h-[50.625rem] overflow-hidden'>
         <DefinitionBackground />
 
         <DefinitionArticle
-          title={definition.definition_title}
-          content={definition.definition_content}
+          title={definition_title}
+          content={definition_content}
         />
 
-        <div className='flex w-[92.39375rem] xsm:flex-col-reverse max-w-full items-start justify-between mx-auto relative z-50 xsm:py-[0.625rem]'>
-          <div className='grid grid-cols-2 gap-[0.75rem] mt-[4.275rem] xsm:px-[0.625rem] xsm:mt-[1.125rem] xsm:pb-[3.125rem]'>
-            {definition?.definition_tag?.map((item, index) => (
+        <div className='xsm:flex-col-reverse xsm:py-[0.625rem] relative z-50 mx-auto flex w-[92.39375rem] max-w-full items-start justify-between'>
+          <div className='xsm:px-[0.625rem] xsm:mt-[1.125rem] xsm:pb-[5.95rem] mt-[4.275rem] grid grid-cols-2 gap-[0.75rem]'>
+            {definition_tag?.map((item, index) => (
               <DefinitionCard
                 key={index}
-                emp={item.definition_tag_emp}
-                value={item.value}
-                content={item.definition_tag_content}
+                title={item?.title ?? ''}
+                value={item?.value ?? ''}
+                unit={item?.unit ?? ''}
+                className='h-[11.151rem] w-[16.8125rem] shrink-0 max-sm:h-[7.144rem] max-sm:w-[10.79625rem]'
               />
             ))}
           </div>
-
           <DefinitionCompany
-            imageUrl={definition?.definition_img_company?.url}
-            imageAlt={definition?.definition_img_company?.alt}
-            imageWidth={definition?.definition_img_company?.width}
-            imageHeight={definition?.definition_img_company?.height}
+            imageUrl={definition_img_company?.url}
+            imageAlt={definition_img_company?.alt}
+            imageWidth={definition_img_company?.width}
+            imageHeight={definition_img_company?.height}
           />
         </div>
       </section>
