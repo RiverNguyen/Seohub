@@ -21,7 +21,7 @@ export const WorkflowItem = ({item, index}: WorkflowItemProps) => {
   return (
     <div
       style={{background: colorbg[index]}}
-      className='card xsm:border-l-none border-t-[0.833px] border-t-solid border-t-[rgba(239,239,239,0.3)] xsm:p-[2.125rem_0.9375rem] item-snapping flex-shrink-0 flex flex-col justify-between overflow-hidden p-5 pl-[1.875rem] w-[34.25rem] h-[22.6875rem] sm:border-l sm:border-[#e6e8ea] bg-gradient-to-b from-[#548beb] to-[#0059f1] xsm:w-full xsm:h-[18.1875rem]'
+      className='card xsm:border-l-none xsm:p-[2.125rem_0.9375rem] item-snapping flex-shrink-0 flex flex-col justify-between overflow-hidden p-5 pl-[1.875rem] w-[34.25rem] h-[22.6875rem] sm:border-l-[0.833px] sm:border-[rgba(239,239,239,0.30)] bg-gradient-to-b from-[#548beb] to-[#0059f1] xsm:w-full xsm:h-[18.1875rem]'
     >
       <div className='item-snapping__warpper'>
         <p className='w-[34.25rem] opacity-70 text-white text-base font-normal mb-2 uppercase xsm:w-full xsm:text-[#E6E8EA]'>

@@ -39,7 +39,7 @@ const ProcessAndField = ({
         })
       }
 
-      const sections = gsap.utils.toArray('.card')
+      const sections = gsap.utils.toArray<HTMLElement>('.card')
       const lastSection = document.querySelector<HTMLElement>(
         '.item-snapping.last-item',
       )
@@ -182,18 +182,18 @@ const ProcessAndField = ({
               height={362.5}
             />
             <div className='ovlay-mb'></div>
-            <div className='absolute top-[5.69rem] left-[3.12rem] right-0 sm:h-[8.32188rem] z-10 xsm:static xsm:top-0 xsm:left-0 xsm:right-0 xsm:z-50'>
+            <div className='xsm:static xsm:top-0 xsm:left-0 xsm:right-0 xsm:z-50 absolute top-[5.69rem] right-0 left-[3.12rem] z-10 sm:h-[8.32188rem]'>
               {workflow.tag && (
-                <div className='badge__label flex flex-col m-[0.625rem] w-max absolute top-[-25%] xsm:relative xsm:top-0 xsm:z-50 after:absolute after:size-[1.37494rem] after:bg-[#1550E5] after:top-0 after:left-0 after:translate-x-[-100%] after:translate-y-[-100%]'>
+                <div className='badge__label xsm:relative xsm:top-0 xsm:z-50 absolute top-[-25%] m-[0.625rem] flex w-max flex-col'>
                   <h2
                     dangerouslySetInnerHTML={{
                       __html: workflow.tag,
                     }}
-                    className='badge__label-text sm:relative xsm:h-[1.374rem] xsm:p-[0.07231rem_0.21694rem] xsm:text-[0.75rem] flex justify-center items-center bg-[#1550e5] whitespace-nowrap w-0 h-[3.04881rem] px-[0.48138rem] text-white text-[1.625rem] font-normal leading-[134%] overflow-hidden transition-all duration-[0.75s] ease-in-out opacity-0'
+                    className='badge__label-text xsm:h-[1.374rem] xsm:p-[0.07231rem_0.21694rem] xsm:text-[0.75rem] flex h-[3.04881rem] w-0 items-center justify-center overflow-hidden bg-[#1550e5] px-[0.48138rem] text-[1.625rem] leading-[134%] font-normal whitespace-nowrap text-white opacity-0 transition-all duration-[0.75s] ease-in-out max-sm:after:absolute max-sm:after:right-0 max-sm:after:bottom-0 max-sm:after:size-[0.61963rem] max-sm:after:translate-full max-sm:after:bg-[#1550E5] sm:relative'
                   ></h2>
                 </div>
               )}
-              <div className='absolute bottom-1/2 left-0 w-max xsm:bottom-[100%] xsm:left-[-1.65rem] xsm:hidden'>
+              <div className='xsm:bottom-[100%] xsm:left-[-1.65rem] xsm:hidden absolute bottom-1/2 left-0 w-max mb-[1.35rem]'>
                 <CustomBadge
                   classPosition='size-[1.3825rem] xsm:size-[0.625rem]'
                   className='xsm:px-1 xsm:py-0'
@@ -203,7 +203,7 @@ const ProcessAndField = ({
                 </CustomBadge>
               </div>
               <div
-                className='xsm:p-[0.74019rem_0.80875rem_2.77063rem_0.80875rem] sm:absolute left-0 w-full text-white text-[2.875rem] xsm:text-[1.625rem] leading-[1.39] sm:h-[4.16094rem] xsm:mb-title-h3 xsm:left-[-1.65rem] [&_p]:before:content-[" "] xsm:[&_p]:before:w-[3.65rem] xsm:[&_p]:before:h-[0.125rem] [&_p]:before:inline-flex [&_p]:before:w-[16rem]'
+                className='xsm:p-[0.74019rem_0.80875rem_2.77063rem_0.80875rem] xsm:text-[1.625rem] xsm:mb-title-h3 xsm:left-[-1.65rem] [&_p]:before:content-[" "] xsm:[&_p]:before:w-[3.65rem] xsm:[&_p]:before:h-[0.125rem] left-0 w-full text-[2.875rem] leading-[1.39] text-white sm:absolute sm:h-[4.16094rem] [&_p]:before:inline-flex [&_p]:before:w-[16rem]'
                 dangerouslySetInnerHTML={{
                   __html: workflow.title,
                 }}
@@ -262,7 +262,7 @@ const ProcessAndField = ({
             </svg>
           </div>
 
-          <div className='overflow-x-hidden absolute bottom-0 flex w-full border-t border-[#e6e8ea] z-10 xsm:flex-col xsm:relative xsm:border-t-none'>
+          <div className='overflow-x-hidden absolute bottom-0 flex w-full border-t-[0.833px] border-[#e6e8ea] z-10 xsm:flex-col xsm:relative xsm:border-t-none'>
             {workflow?.workflow_list?.map((item, index) => (
               <WorkflowItem
                 key={index}

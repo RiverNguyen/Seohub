@@ -135,7 +135,7 @@ export default function SectionField({commitment}: {commitment: Commitment}) {
             height={362.5}
           />
           <Image
-            className='hidden absolute w-[49.875rem] h-[24.125rem] left-[-8.44rem] top-[-0.37rem] xsm:block xsm:top-[0.25rem] xsm:left-0 xsm:w-[21.4375rem] xsm:h-[11.425rem]'
+            className='hidden absolute w-[49.875rem] h-[24.125rem] left-[-8.44rem] top-[-0.37rem] xsm:block xsm:top-[0.25rem] xsm:left-0 xsm:w-full xsm:h-auto'
             src='https://seohub.okhub-tech.com/wp-content/uploads/2025/04/foot-r-img-bg3-mb.webp'
             alt=''
             width={498.75}
@@ -150,20 +150,24 @@ export default function SectionField({commitment}: {commitment: Commitment}) {
           />
           <div
             ref={fieldOfActivityTitleRef}
-            className='absolute z-[1] left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[56.90819rem] text-[#9c9c9c] text-[2.875rem] font-normal leading-[1.39] xsm:w-[21.4375rem] xsm:text-[1.875rem] xsm:top-[14rem] xsm:left-[12rem]'
+            className='xsm:w-[21.4375rem] xsm:top-[14rem] xsm:left-[12rem] absolute top-1/2 left-1/2 z-[1] w-[56.90819rem] -translate-x-1/2 -translate-y-1/2'
           >
+            <div className='mr-[4rem] mb-[0.8125rem] inline-block h-[0rem] translate-y-[-0.5rem] max-sm:h-auto'>
+              <div className='grid grid-cols-[1fr_1.37494rem] max-sm:grid-cols-[0.61963rem_1fr]'>
+                <div className='inline-flex bg-[#1650E5] p-[0.16044rem_0.48138rem] text-[1.625rem] leading-[134%] text-white max-sm:col-start-2 max-sm:row-start-2 max-sm:text-[0.75rem]'>
+                  {commitment?.tag ?? ''}
+                </div>
+                <div className='max-sm:col-start-2 max-sm:row-start-1'></div>
+                <div className='max-sm:col-start-1 max-sm:row-start-2'></div>
+                <div className='size-[1.37494rem] bg-[#1650E5] max-sm:col-start-1 max-sm:row-start-1 max-sm:size-[0.61963rem]'></div>
+              </div>
+            </div>
             <div
               dangerouslySetInnerHTML={{
                 __html: commitment.title,
               }}
+              className='inline text-[2.875rem] leading-[139.13%] font-normal text-[#9c9c9c] max-sm:text-[1.875rem] sm:[&_p]:inline'
             ></div>
-            <div className='sm:hidden'>
-              <div className='badge-lv flex flex-col m-[0.625rem] w-max absolute top-0'>
-                <p className='relative flex justify-center items-center bg-[#1550e5] whitespace-nowrap w-0 h-[3.04881rem] px-[0.48138rem] text-white text-[1.625rem] font-normal leading-[134%] overflow-hidden transition-all duration-[0.75s] ease-in-out opacity-0'>
-                  {commitment.tag ?? ''}
-                </p>
-              </div>
-            </div>
           </div>
         </div>
       </div>
