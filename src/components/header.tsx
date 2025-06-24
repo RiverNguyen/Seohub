@@ -14,6 +14,7 @@ interface HeaderProps {
 }
 
 const Header = ({header}: HeaderProps) => {
+  console.log(header)
   const context = useContext(AppContext)
   if (!context) throw new Error('AppContext must be used within AppProvider')
   const [isHidden, setIsHidden] = useState(false)
