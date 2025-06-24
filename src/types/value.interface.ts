@@ -1,3 +1,5 @@
+import {IMedia} from '@/types/media.interface'
+
 export interface IValueToCustomerItem {
   title?: string
   description?: string
@@ -9,6 +11,11 @@ export interface IValueToCustomerItem {
   }
 }
 
+interface IValueItem {
+  title: string
+  value_content: string
+  thumbnail: IMedia
+}
 export interface IValueToCustomer {
   title?: string
   value_1?: IValueToCustomerItem
@@ -18,4 +25,5 @@ export interface IValueToCustomer {
     title?: string
     url?: string
   }
+  our_value: IValueItem[]
 }
