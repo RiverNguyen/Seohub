@@ -1,3 +1,5 @@
+'use client'
+import useIsMobile from '@/hooks/useIsMobile'
 import type {Footer, SocialList} from '@/types/footer.interface'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -8,6 +10,7 @@ interface FooterLogoProps {
 }
 
 const FooterLogo = ({footer, globalSocial}: FooterLogoProps) => {
+  const isMobile = useIsMobile()
   return (
     <div className='flex flex-col justify-between relative z-30'>
       <div className='flex flex-col xsm:flex-row xsm:items-center xsm:justify-between xsm:px-[0.625rem] xsm:py-[1.5rem] xsm:bg-[#F5F7F9] xsm:border-t xsm:border-b'>
@@ -18,8 +21,8 @@ const FooterLogo = ({footer, globalSocial}: FooterLogoProps) => {
           <Image
             src={footer.logo_footer.url}
             alt={footer.logo_footer.alt}
-            width={16.80975}
-            height={4.5}
+            width={isMobile ? 16.80975 : 265.4651}
+            height={isMobile ? 4.5 : 51.1875}
             className='h-[4.5rem] w-[16.80975rem] xsm:h-[2.5rem] xsm:w-full'
           />
         </Link>
